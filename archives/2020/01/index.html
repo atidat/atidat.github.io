@@ -26,7 +26,8 @@
     
     <script src="/libs/jquery/jquery.min.js"></script>
     
-<meta name="generator" content="Hexo 4.2.0"></head>
+<meta name="generator" content="Hexo 4.2.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
 <body>
@@ -387,7 +388,15 @@
                             <div class="summary block-with-text">
                                 
                                     golang简易版发布订阅模型转载自《Go语言高级编程》  
-source code123456789101112131415161718192021222324252627282930313233343536373839404142434
+source codepackage pubsub
+
+import (
+    "sync"
+    "time"
+)
+
+type (
+    subscriber chan i
                                 
                             </div>
                             <div class="publish-info">
