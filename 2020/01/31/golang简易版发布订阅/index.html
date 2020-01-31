@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="keywords" content="golang简易版发布订阅, atidat,生活随笔,技术积累">
     <meta name="description" content="golang简易版发布订阅模型转载自《Go语言高级编程》  
-source codepackage pubsub
+source codelibpackage pubsub
 
 import (
     &#34;sync&#34;
@@ -14,7 +14,7 @@ import (
 )
 
 type (
-    subscriber chan i">
+    subscriber cha">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -365,8 +365,8 @@ type (
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85/">
-                                <span class="chip bg-color">发布订阅</span>
+                            <a href="/tags/%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85%E6%A8%A1%E5%9E%8B/">
+                                <span class="chip bg-color">发布订阅模型</span>
                             </a>
                         
                     </div>
@@ -404,7 +404,7 @@ type (
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="golang简易版发布订阅模型"><a href="#golang简易版发布订阅模型" class="headerlink" title="golang简易版发布订阅模型"></a>golang简易版发布订阅模型</h1><p>转载自《Go语言高级编程》  </p>
-<h2 id="source-code"><a href="#source-code" class="headerlink" title="source code"></a>source code</h2><pre class="line-numbers language-golang"><code class="language-golang">package pubsub
+<h2 id="source-code"><a href="#source-code" class="headerlink" title="source code"></a>source code</h2><h3 id="lib"><a href="#lib" class="headerlink" title="lib"></a>lib</h3><pre class="line-numbers language-golang"><code class="language-golang">package pubsub
 
 import (
     "sync"
@@ -491,6 +491,37 @@ func (p *Publisher) sendTopic(sub subscriber, topic topicFunc, v interface{}, wg
     }
 }
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="example"><a href="#example" class="headerlink" title="example"></a>example</h3><pre class="line-numbers language-golang"><code class="language-golang">import "pubsub"
+
+func main() {
+    p := pubsub.NewPublisher(100*time.Millsecond, 10)
+    defer p.close()
+
+    all := p.Subscribe()
+    golang := p.Subscribe(func(v interface{}) bool {
+        if s, ok := v.(string); ok { // x.(T) 类型断言
+            return strings.Contains(s, "golang")
+        }
+        return false
+    })
+
+    p.Publish("hello world!")
+    p.Publish("hello golang!")
+
+    go func() {
+        for msg := range all {
+            fmt.Println("all:", msg)
+        }
+    } ()
+
+    go func() {
+        for msg := range golang {
+            fmt.Println("golang:", msg)
+        }
+    } ()
+
+    time.Sleep(3*time.Second)
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
             </div>
             <hr/>
@@ -554,8 +585,8 @@ func (p *Publisher) sendTopic(sub subscriber, topic topicFunc, v interface{}, wg
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85/">
-                                    <span class="chip bg-color">发布订阅</span>
+                                <a href="/tags/%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85%E6%A8%A1%E5%9E%8B/">
+                                    <span class="chip bg-color">发布订阅模型</span>
                                 </a>
                             
                         </div>
@@ -739,7 +770,7 @@ func (p *Publisher) sendTopic(sub subscriber, topic topicFunc, v interface{}, wg
                     <div class="summary block-with-text">
                         
                             golang简易版发布订阅模型转载自《Go语言高级编程》  
-source codepackage pubsub
+source codelibpackage pubsub
 
 import (
     "sync"
@@ -747,7 +778,7 @@ import (
 )
 
 type (
-    subscriber chan i
+    subscriber cha
                         
                     </div>
                     <div class="publish-info">
@@ -766,8 +797,8 @@ type (
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85/">
-                        <span class="chip bg-color">发布订阅</span>
+                    <a href="/tags/%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85%E6%A8%A1%E5%9E%8B/">
+                        <span class="chip bg-color">发布订阅模型</span>
                     </a>
                     
                 </div>
