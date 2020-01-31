@@ -8,7 +8,7 @@
       <link href="/2020/01/31/golang%E7%AE%80%E6%98%93%E7%89%88%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85/"/>
       <url>/2020/01/31/golang%E7%AE%80%E6%98%93%E7%89%88%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85/</url>
       
-        <content type="html"><![CDATA[<h1 id="golang简易版发布订阅模型"><a href="#golang简易版发布订阅模型" class="headerlink" title="golang简易版发布订阅模型"></a>golang简易版发布订阅模型</h1><p>转载自《Go语言高级编程》  </p><h2 id="source-code"><a href="#source-code" class="headerlink" title="source code"></a>source code</h2><pre class=" language-golang"><code class="language-golang">package pubsubimport (    "sync"    "time")type (    subscriber chan interface{}         // 订阅者为一个管道    topicFunc  func(v interface{}) bool //主题为一个过滤器)// 发布者对象type Publisher struct {    m           sync.RWMutex    buffer      int    timeout     time.Duration    subscribers map[subscriber]topicFunc // 订阅者对象}// 订阅一个发布者对象，可设置发布超时时间和缓存队列的长度func NewPublisher(publishTimeout time.Duration, buffer int) *Publisher {    return &Publisher{        buffer:      buffer,        timeout:     publishTimeout,        subscribers: make(map[subscriber]topicFunc),    }}// 添加一个新的订阅者，订阅全部主题func (p *Publisher) Subscribe() chan interface{} {    return p.SubscribeTopic(nil)}// 添加一个新的订阅者，订阅过滤器筛选后的主题func (p *Publisher) SubscribeTopic(topic topicFunc) chan interface{} {    ch := make(chan interface{}, p.buffer)    p.m.Lock()    p.subscribers[ch] = topic    p.m.Unlock()    return ch}// 退出订阅func (p *Publisher) Evict(sub chan interface{}) {    p.m.Lock()    defer p.m.Unlock()    delete(p.subscribers, sub)    close(sub)}// 发布一个主题func (p *Publisher) Publish(v interface{}) {    p.m.Lock()    defer p.m.Unlock()    var wg sync.WaitGroup    for sub, topic := range p.subscribers {        wg.Add(1)        go p.sendTopic(sub, topic, v, &wg)    }    wg.Wait()}// 关闭发布者对象，同时关闭所有的订阅者管道func (p *Publisher) Close() {    p.m.Lock()    defer p.m.Unlock()    for sub := range p.subscribers {        delete(p.subscribers, sub)        close(sub)    }}// 发送主题，可以容忍一定的超时func (p *Publisher) sendTopic(sub subscriber, topic topicFunc, v interface{}, wg *sync.WaitGroup) {    defer wg.Done()    if topic != nil && !topic(v) {        return    }    select {    case sub <- v:    case <-time.After(p.timeout):    }}</code></pre>]]></content>
+        <content type="html"><![CDATA[<h1 id="golang简易版发布订阅模型"><a href="#golang简易版发布订阅模型" class="headerlink" title="golang简易版发布订阅模型"></a>golang简易版发布订阅模型</h1><p>转载自《Go语言高级编程》  </p><h2 id="source-code"><a href="#source-code" class="headerlink" title="source code"></a>source code</h2><pre class="line-numbers language-golang"><code class="language-golang">package pubsubimport (    "sync"    "time")type (    subscriber chan interface{}         // 订阅者为一个管道    topicFunc  func(v interface{}) bool //主题为一个过滤器)// 发布者对象type Publisher struct {    m           sync.RWMutex    buffer      int    timeout     time.Duration    subscribers map[subscriber]topicFunc // 订阅者对象}// 订阅一个发布者对象，可设置发布超时时间和缓存队列的长度func NewPublisher(publishTimeout time.Duration, buffer int) *Publisher {    return &Publisher{        buffer:      buffer,        timeout:     publishTimeout,        subscribers: make(map[subscriber]topicFunc),    }}// 添加一个新的订阅者，订阅全部主题func (p *Publisher) Subscribe() chan interface{} {    return p.SubscribeTopic(nil)}// 添加一个新的订阅者，订阅过滤器筛选后的主题func (p *Publisher) SubscribeTopic(topic topicFunc) chan interface{} {    ch := make(chan interface{}, p.buffer)    p.m.Lock()    p.subscribers[ch] = topic    p.m.Unlock()    return ch}// 退出订阅func (p *Publisher) Evict(sub chan interface{}) {    p.m.Lock()    defer p.m.Unlock()    delete(p.subscribers, sub)    close(sub)}// 发布一个主题func (p *Publisher) Publish(v interface{}) {    p.m.Lock()    defer p.m.Unlock()    var wg sync.WaitGroup    for sub, topic := range p.subscribers {        wg.Add(1)        go p.sendTopic(sub, topic, v, &wg)    }    wg.Wait()}// 关闭发布者对象，同时关闭所有的订阅者管道func (p *Publisher) Close() {    p.m.Lock()    defer p.m.Unlock()    for sub := range p.subscribers {        delete(p.subscribers, sub)        close(sub)    }}// 发送主题，可以容忍一定的超时func (p *Publisher) sendTopic(sub subscriber, topic topicFunc, v interface{}, wg *sync.WaitGroup) {    defer wg.Done()    if topic != nil && !topic(v) {        return    }    select {    case sub <- v:    case <-time.After(p.timeout):    }}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
       
       
       
@@ -49,38 +49,6 @@
             <tag> 生活随笔 </tag>
             
         </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Hello Atidat blog</title>
-      <link href="/2020/01/24/Hello-Atidat-blog/"/>
-      <url>/2020/01/24/Hello-Atidat-blog/</url>
-      
-        <content type="html"><![CDATA[<h1 id="This-is-my-first-blog"><a href="#This-is-my-first-blog" class="headerlink" title="This is my first blog"></a>This is my first blog</h1><h2 id="This-is-second-title"><a href="#This-is-second-title" class="headerlink" title="This is second title"></a>This is second title</h2><p>Hexo is so brilliant!</p>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> what&#39;s that? </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Hello World</title>
-      <link href="/2020/01/23/hello-world/"/>
-      <url>/2020/01/23/hello-world/</url>
-      
-        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>]]></content>
-      
-      
       
     </entry>
     
