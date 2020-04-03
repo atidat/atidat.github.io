@@ -4,9 +4,10 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Go.1.13新特性, atidat,生活随笔,技术积累">
-    <meta name="description" content="《goproxy.cn - 为中国 Go 语言开发者量身打造的模块代理》整理https://segmentfault.com/a/1190000020293616?utm_source=tag-newest
-Go 1.13 新特性说明一、关">
+    <meta name="keywords" content="关爱儿童成长, atidat,生活随笔,技术积累">
+    <meta name="description" content="
+《小委托人》本着消磨时间的打算，看了这部早早下载却一直在手机里吃灰的《小委托人》，很难受。我想，影片中暴露在我眼前的这些罪行，也许只是冰山下的一角。法律所统计到的受伤害的孩子，也许还有不少在忍受煎熬。  
+愤怒 对于感性的我，看到这些施虐">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +15,7 @@ Go 1.13 新特性说明一、关">
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Go.1.13新特性 | 春花秋月何时了</title>
+    <title>关爱儿童成长 | 春花秋月何时了</title>
     <link rel="icon" type="image/jpeg" href="/logo.jpg">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -235,12 +236,12 @@ Go 1.13 新特性说明一、关">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Go.1.13新特性</h1>
+                    <h1 class="description center-align post-title">关爱儿童成长</h1>
                 </div>
             </div>
         </div>
@@ -355,9 +356,13 @@ Go 1.13 新特性说明一、关">
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E7%94%9F%E6%B4%BB%E9%9A%8F%E7%AC%94/">
+                                <span class="chip bg-color">生活随笔</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -369,7 +374,7 @@ Go 1.13 新特性说明一、关">
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-02-11
+                    2020-03-01
                 </div>
                 
 
@@ -391,14 +396,14 @@ Go 1.13 新特性说明一、关">
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>《goproxy.cn - 为中国 Go 语言开发者量身打造的模块代理》整理<br><a href="https://segmentfault.com/a/1190000020293616?utm_source=tag-newest" target="_blank" rel="noopener">https://segmentfault.com/a/1190000020293616?utm_source=tag-newest</a></p>
-<h1 id="Go-1-13-新特性说明"><a href="#Go-1-13-新特性说明" class="headerlink" title="Go 1.13 新特性说明"></a><strong>Go 1.13 新特性说明</strong></h1><h2 id="一、关于Module"><a href="#一、关于Module" class="headerlink" title="一、关于Module"></a><strong>一、关于Module</strong></h2><h3 id="1、前情提要"><a href="#1、前情提要" class="headerlink" title="1、前情提要"></a><strong>1、前情提要</strong></h3><p>Go Modules最早发布于1.11版本。随着一起发布的还有Module proxy protocol 协议，通过该协议可以搭建Go模块代理，最后交由GOPROXY环境变量，指引go命令后续在抓取模块时的途径。</p>
-<h3 id="2、GOPROXY"><a href="#2、GOPROXY" class="headerlink" title="2、GOPROXY"></a><strong>2、GOPROXY</strong></h3><p>1.13版本将GOPROXY默认为<a href="https://proxy.golang.org" target="_blank" rel="noopener">https://proxy.golang.org</a><br>(大陆不可访问)故中国开发者需要修改GORROXY后再开发。七牛云提供了一个Go模块代理：goproxy.cn</p>
-<h3 id="3、使用goproxy-cn"><a href="#3、使用goproxy-cn" class="headerlink" title="3、使用goproxy.cn"></a><strong>3、使用goproxy.cn</strong></h3><p>命令：go env -w GOPROXY=<a href="https://goproxy.cn,direct" target="_blank" rel="noopener">https://goproxy.cn,direct</a><br>direct：解决访问私有库问题。当go抓取目标模块404时，就回退到direct，即目标模块的源头，去抓取</p>
-<h3 id="4、私有库访问"><a href="#4、私有库访问" class="headerlink" title="4、私有库访问"></a><strong>4、私有库访问</strong></h3><p>关于GOPROXY中的direct字段，并不是一个完美的私有库访问问题的解决方案。<br>GONOPROXY环境变量，通过设置该变量可以控制哪些module path能忽略GOPROXY，无脑回源。<br>如：GONOPROXY=*.corp.example.com 意味着go在抓取所有corp.example.com的三级子域名下的所有模块时都将忽略GOPROXY设置，而直接回源到目标模块的源地址</p>
-<h3 id="5、GOSUMDB"><a href="#5、GOSUMDB" class="headerlink" title="5、GOSUMDB"></a><strong>5、GOSUMDB</strong></h3><p>功能：防止从公共模块代理中抓取的模块被篡改<br>默认值：sum.golang.org<br>原理：go将在抓取完所有模块时，对所有模块进行哈希校验，只有校验值和数据库中现有值一致时，才算抓取成功。<br>GONOSUMDB：控制go应该忽略校验哪些module path下的模块</p>
-<h3 id="GOPRIVATE"><a href="#GOPRIVATE" class="headerlink" title="GOPRIVATE"></a><strong>GOPRIVATE</strong></h3><p>简单地理解为设置该变量，即同时设置了GONOPROXY和GONOSUMDB</p>
-<h2 id="二、关于defer"><a href="#二、关于defer" class="headerlink" title="二、关于defer"></a><strong>二、关于defer</strong></h2><p>待续</p>
+                <p><img src="https://s2.ax1x.com/2020/03/01/32abAe.jpg" alt="小委托人"></p>
+<h1 id="《小委托人》"><a href="#《小委托人》" class="headerlink" title="《小委托人》"></a>《小委托人》</h1><h2 id><a href="#" class="headerlink" title></a></h2><p>本着消磨时间的打算，看了这部早早下载却一直在手机里吃灰的《小委托人》，很难受。我想，影片中暴露在我眼前的这些罪行，也许只是冰山下的一角。法律所统计到的受伤害的孩子，也许还有不少在忍受煎熬。  </p>
+<h2 id="愤怒"><a href="#愤怒" class="headerlink" title="愤怒"></a>愤怒</h2><p> 对于感性的我，看到这些施虐的画面时，心中涌起愤怒。明明这些应当在阳光下肆意欢笑的孩子，为什么却胆怯地缩在阴暗地房间一角，瑟瑟发抖。当“娃娃鱼”用锤子砸开那一家的房门时，面对着施虐完的继母，我都在屏幕前挥舞着我的拳头。</p>
+<h2 id="无助"><a href="#无助" class="headerlink" title="无助"></a>无助</h2><p>然而，面对着影片结束后的字幕，“但绝大多数施暴者都被判以缓期执行或罚款”，我陷入了迷惘，被一种无力感包围。若是对这些施暴者的罪恶行为加以重刑，那么孩子的抚养该怎么办？倘若爷爷奶奶辈无能力或无意愿抚养，难道指望现有的社会福利去收养如此之多的受害儿童？</p>
+<h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><p>个人观点：应当对这些证据确凿的施虐父母，处以重刑，并在刑满释放后，加以类似电子镣铐之类的器件，标签化这些“施虐”者的罪犯。<br>个人困惑：如何处理孩子的抚养问题？若是仅仅对“施虐者”判期缓刑或罚款，我相信这绝不是处罚，而是纵容这些罪恶行为。</p>
+<h2 id="想法"><a href="#想法" class="headerlink" title="想法"></a>想法</h2><p>斗胆提出以下几点，不知是否合理。<br>1）杜绝根因：对现有法律施虐儿童的章节，重新review，不合适处重新拟制，并通过微信、头条等社交媒体，广而告之这点。<br>2）加强对儿童福利机构的人员考核。对于这类机构，绝不允许“关系户”和“养老户”上岗。并对有把握的受害家庭，儿童机构人员有权利要求警力人员配合调查案件。<br>3）对于定罪的犯案人员，处以重刑，并在刑满释放后，在3~5年内标签化这类人员，剥夺其儿童抚养权。</p>
+<h2 id="附注："><a href="#附注：" class="headerlink" title="附注："></a>附注：</h2><p>其他诸如培训关爱儿童志愿者的想法，还不成熟，暂且不叙。  </p>
+<p>注：影片中旁人的冷漠和精英阶层对底层人民视作“蚂蚁的”观点，此处暂不展开，后续有感再详述。</p>
 
             </div>
             <hr/>
@@ -424,7 +429,7 @@ Go 1.13 新特性说明一、关">
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://atidat.github.io/2020/02/11/Go-1-13%E6%96%B0%E7%89%B9%E6%80%A7/">https://atidat.github.io/2020/02/11/Go-1-13%E6%96%B0%E7%89%B9%E6%80%A7/</a>
+                    <a href="https://atidat.github.io/2020/03/02/%E5%85%B3%E7%88%B1%E5%84%BF%E7%AB%A5%E6%88%90%E9%95%BF/">https://atidat.github.io/2020/03/02/%E5%85%B3%E7%88%B1%E5%84%BF%E7%AB%A5%E6%88%90%E9%95%BF/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -461,7 +466,11 @@ Go 1.13 新特性说明一、关">
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/%E7%94%9F%E6%B4%BB%E9%9A%8F%E7%AC%94/">
+                                    <span class="chip bg-color">生活随笔</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -629,26 +638,24 @@ Go 1.13 新特性说明一、关">
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/03/02/%E5%85%B3%E7%88%B1%E5%84%BF%E7%AB%A5%E6%88%90%E9%95%BF/">
+                <a href="/2020/04/04/%E5%90%8C%E8%8A%B1%E9%A1%BA%E7%AC%94%E8%AF%95-md/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="关爱儿童成长">
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="同花顺笔试.md">
                         
-                        <span class="card-title">关爱儿童成长</span>
+                        <span class="card-title">同花顺笔试.md</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
                             
-《小委托人》本着消磨时间的打算，看了这部早早下载却一直在手机里吃灰的《小委托人》，很难受。我想，影片中暴露在我眼前的这些罪行，也许只是冰山下的一角。法律所统计到的受伤害的孩子，也许还有不少在忍受煎熬。  
-愤怒 对于感性的我，看到这些施虐
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-03-01
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-04-03
                         </span>
                         <span class="publish-author">
                             
@@ -657,14 +664,6 @@ Go 1.13 新特性说明一、关">
                             
                         </span>
                     </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E7%94%9F%E6%B4%BB%E9%9A%8F%E7%AC%94/">
-                        <span class="chip bg-color">生活随笔</span>
-                    </a>
-                    
                 </div>
                 
             </div>
@@ -676,33 +675,25 @@ Go 1.13 新特性说明一、关">
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/01/31/golang%E7%AE%80%E6%98%93%E7%89%88%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85/">
+                <a href="/2020/02/11/Go-1-13%E6%96%B0%E7%89%B9%E6%80%A7/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="golang简易版发布订阅">
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="Go.1.13新特性">
                         
-                        <span class="card-title">golang简易版发布订阅</span>
+                        <span class="card-title">Go.1.13新特性</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            golang简易版发布订阅模型转载自《Go语言高级编程》  
-source codelibpackage pubsub
-
-import (
-    "sync"
-    "time"
-)
-
-type (
-    subscriber cha
+                            《goproxy.cn - 为中国 Go 语言开发者量身打造的模块代理》整理https://segmentfault.com/a/1190000020293616?utm_source=tag-newest
+Go 1.13 新特性说明一、关
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-01-31
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-02-11
                             </span>
                         <span class="publish-author">
                             
@@ -711,14 +702,6 @@ type (
                             
                         </span>
                     </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85%E6%A8%A1%E5%9E%8B/">
-                        <span class="chip bg-color">发布订阅模型</span>
-                    </a>
-                    
                 </div>
                 
             </div>

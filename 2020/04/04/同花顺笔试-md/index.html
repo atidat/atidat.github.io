@@ -4,9 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Go.1.13新特性, atidat,生活随笔,技术积累">
-    <meta name="description" content="《goproxy.cn - 为中国 Go 语言开发者量身打造的模块代理》整理https://segmentfault.com/a/1190000020293616?utm_source=tag-newest
-Go 1.13 新特性说明一、关">
+    <meta name="keywords" content="同花顺笔试.md, atidat,生活随笔,技术积累">
+    <meta name="description" content="同花顺笔试.md | 春花秋月何时了">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +13,7 @@ Go 1.13 新特性说明一、关">
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Go.1.13新特性 | 春花秋月何时了</title>
+    <title>同花顺笔试.md | 春花秋月何时了</title>
     <link rel="icon" type="image/jpeg" href="/logo.jpg">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -235,12 +234,12 @@ Go 1.13 新特性说明一、关">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Go.1.13新特性</h1>
+                    <h1 class="description center-align post-title">同花顺笔试.md</h1>
                 </div>
             </div>
         </div>
@@ -369,7 +368,7 @@ Go 1.13 新特性说明一、关">
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-02-11
+                    2020-04-03
                 </div>
                 
 
@@ -391,15 +390,7 @@ Go 1.13 新特性说明一、关">
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>《goproxy.cn - 为中国 Go 语言开发者量身打造的模块代理》整理<br><a href="https://segmentfault.com/a/1190000020293616?utm_source=tag-newest" target="_blank" rel="noopener">https://segmentfault.com/a/1190000020293616?utm_source=tag-newest</a></p>
-<h1 id="Go-1-13-新特性说明"><a href="#Go-1-13-新特性说明" class="headerlink" title="Go 1.13 新特性说明"></a><strong>Go 1.13 新特性说明</strong></h1><h2 id="一、关于Module"><a href="#一、关于Module" class="headerlink" title="一、关于Module"></a><strong>一、关于Module</strong></h2><h3 id="1、前情提要"><a href="#1、前情提要" class="headerlink" title="1、前情提要"></a><strong>1、前情提要</strong></h3><p>Go Modules最早发布于1.11版本。随着一起发布的还有Module proxy protocol 协议，通过该协议可以搭建Go模块代理，最后交由GOPROXY环境变量，指引go命令后续在抓取模块时的途径。</p>
-<h3 id="2、GOPROXY"><a href="#2、GOPROXY" class="headerlink" title="2、GOPROXY"></a><strong>2、GOPROXY</strong></h3><p>1.13版本将GOPROXY默认为<a href="https://proxy.golang.org" target="_blank" rel="noopener">https://proxy.golang.org</a><br>(大陆不可访问)故中国开发者需要修改GORROXY后再开发。七牛云提供了一个Go模块代理：goproxy.cn</p>
-<h3 id="3、使用goproxy-cn"><a href="#3、使用goproxy-cn" class="headerlink" title="3、使用goproxy.cn"></a><strong>3、使用goproxy.cn</strong></h3><p>命令：go env -w GOPROXY=<a href="https://goproxy.cn,direct" target="_blank" rel="noopener">https://goproxy.cn,direct</a><br>direct：解决访问私有库问题。当go抓取目标模块404时，就回退到direct，即目标模块的源头，去抓取</p>
-<h3 id="4、私有库访问"><a href="#4、私有库访问" class="headerlink" title="4、私有库访问"></a><strong>4、私有库访问</strong></h3><p>关于GOPROXY中的direct字段，并不是一个完美的私有库访问问题的解决方案。<br>GONOPROXY环境变量，通过设置该变量可以控制哪些module path能忽略GOPROXY，无脑回源。<br>如：GONOPROXY=*.corp.example.com 意味着go在抓取所有corp.example.com的三级子域名下的所有模块时都将忽略GOPROXY设置，而直接回源到目标模块的源地址</p>
-<h3 id="5、GOSUMDB"><a href="#5、GOSUMDB" class="headerlink" title="5、GOSUMDB"></a><strong>5、GOSUMDB</strong></h3><p>功能：防止从公共模块代理中抓取的模块被篡改<br>默认值：sum.golang.org<br>原理：go将在抓取完所有模块时，对所有模块进行哈希校验，只有校验值和数据库中现有值一致时，才算抓取成功。<br>GONOSUMDB：控制go应该忽略校验哪些module path下的模块</p>
-<h3 id="GOPRIVATE"><a href="#GOPRIVATE" class="headerlink" title="GOPRIVATE"></a><strong>GOPRIVATE</strong></h3><p>简单地理解为设置该变量，即同时设置了GONOPROXY和GONOSUMDB</p>
-<h2 id="二、关于defer"><a href="#二、关于defer" class="headerlink" title="二、关于defer"></a><strong>二、关于defer</strong></h2><p>待续</p>
-
+                
             </div>
             <hr/>
 
@@ -424,7 +415,7 @@ Go 1.13 新特性说明一、关">
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://atidat.github.io/2020/02/11/Go-1-13%E6%96%B0%E7%89%B9%E6%80%A7/">https://atidat.github.io/2020/02/11/Go-1-13%E6%96%B0%E7%89%B9%E6%80%A7/</a>
+                    <a href="https://atidat.github.io/2020/04/04/%E5%90%8C%E8%8A%B1%E9%A1%BA%E7%AC%94%E8%AF%95-md/">https://atidat.github.io/2020/04/04/%E5%90%8C%E8%8A%B1%E9%A1%BA%E7%AC%94%E8%AF%95-md/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -625,9 +616,48 @@ Go 1.13 新特性说明一、关">
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2020/04/04/%E5%90%8C%E8%8A%B1%E9%A1%BA%E7%AC%94%E8%AF%95-md/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="同花顺笔试.md">
+                        
+                        <span class="card-title">同花顺笔试.md</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-04-03
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            atidat
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
             <div class="card">
                 <a href="/2020/03/02/%E5%85%B3%E7%88%B1%E5%84%BF%E7%AB%A5%E6%88%90%E9%95%BF/">
                     <div class="card-image">
@@ -647,9 +677,9 @@ Go 1.13 新特性说明一、关">
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-03-01
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-03-01
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -663,60 +693,6 @@ Go 1.13 新特性说明一、关">
                     
                     <a href="/tags/%E7%94%9F%E6%B4%BB%E9%9A%8F%E7%AC%94/">
                         <span class="chip bg-color">生活随笔</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2020/01/31/golang%E7%AE%80%E6%98%93%E7%89%88%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="golang简易版发布订阅">
-                        
-                        <span class="card-title">golang简易版发布订阅</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            golang简易版发布订阅模型转载自《Go语言高级编程》  
-source codelibpackage pubsub
-
-import (
-    "sync"
-    "time"
-)
-
-type (
-    subscriber cha
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-01-31
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-user fa-fw"></i>
-                            atidat
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85%E6%A8%A1%E5%9E%8B/">
-                        <span class="chip bg-color">发布订阅模型</span>
                     </a>
                     
                 </div>
