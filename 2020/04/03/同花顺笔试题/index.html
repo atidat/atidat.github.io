@@ -4,8 +4,14 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="同花顺笔试.md, atidat,生活随笔,技术积累">
-    <meta name="description" content="同花顺笔试.md | 春花秋月何时了">
+    <meta name="keywords" content="同花顺笔试题, atidat,生活随笔,技术积累">
+    <meta name="description" content="记一次同花顺golang笔试题    
+题目一：读取文件重复行import (
+    &amp;quot;os&amp;quot;
+    &amp;quot;bufio&amp;quot;
+)
+
+func getRepeatedLines(file string) m">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -13,7 +19,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>同花顺笔试.md | 春花秋月何时了</title>
+    <title>同花顺笔试题 | 春花秋月何时了</title>
     <link rel="icon" type="image/jpeg" href="/logo.jpg">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -234,12 +240,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">同花顺笔试.md</h1>
+                    <h1 class="description center-align post-title">同花顺笔试题</h1>
                 </div>
             </div>
         </div>
@@ -390,7 +396,80 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                
+                <p>记一次同花顺golang笔试题    </p>
+<h4 id="题目一：读取文件重复行"><a href="#题目一：读取文件重复行" class="headerlink" title="题目一：读取文件重复行"></a>题目一：读取文件重复行</h4><pre><code>import (
+    &quot;os&quot;
+    &quot;bufio&quot;
+)
+
+func getRepeatedLines(file string) map[string]bool {
+    fd, err := os.Open(file)
+    if err != nil {
+        return nil
+    }
+
+    stream := bufio.NewReader(fd)
+    for {
+        line, err := stream.ReadBytes(&#39;\n&#39;)
+        if err != nil {
+            return nil
+        }
+
+        _, ok := storeLines[line]
+        if ok == false {
+            storeLines[line] = true
+        }
+    }
+
+    return storeLines
+}</code></pre><h4 id="题目二："><a href="#题目二：" class="headerlink" title="题目二："></a>题目二：</h4><p>slice由哪几个部分构成？如下代码输出为？</p>
+<pre><code>s := []int{}
+fmt.Println(s == nil)</code></pre><h4 id="题目三：反转整数数组的顺序"><a href="#题目三：反转整数数组的顺序" class="headerlink" title="题目三：反转整数数组的顺序"></a>题目三：反转整数数组的顺序</h4><pre><code>func revert(nums []int) []int {
+    if len(nums) == 0 {
+        return nums
+    }
+
+    for i := 0; i &lt; len(nums)/2; i++ {
+        nums[i], nums[len(nums)-1-i] = nums[len(nums)-1-i], nums[i]
+    }
+    return nums
+}</code></pre><h4 id="题目四：协程和线程的区别"><a href="#题目四：协程和线程的区别" class="headerlink" title="题目四：协程和线程的区别"></a>题目四：协程和线程的区别</h4><p>1、协程由线程调度管理<br>2、协程间切换由用户态代码实现，线程间切换由内核态切换实现<br>3、协程内存占用少   </p>
+<h4 id="题目五：想要并发输出0-9，以下代码是否存在问题，应该如何改进呢？"><a href="#题目五：想要并发输出0-9，以下代码是否存在问题，应该如何改进呢？" class="headerlink" title="题目五：想要并发输出0-9，以下代码是否存在问题，应该如何改进呢？"></a>题目五：想要并发输出0-9，以下代码是否存在问题，应该如何改进呢？</h4><pre><code>package main
+
+import &quot;fmt&quot;
+
+func main() {
+    for i := 0; i &lt; 10; i++ {
+        go func() {
+            fmt.Println(i)
+        }()
+    }
+}</code></pre><h4 id="题目六：分享下项目中goroutine泄露的排查经历-or-手写一段goroutine泄露代码"><a href="#题目六：分享下项目中goroutine泄露的排查经历-or-手写一段goroutine泄露代码" class="headerlink" title="题目六：分享下项目中goroutine泄露的排查经历 or 手写一段goroutine泄露代码"></a>题目六：分享下项目中goroutine泄露的排查经历 or 手写一段goroutine泄露代码</h4><h4 id="题目七：修改以下代码，实现并发安全的cache机制，如果可以实现重复抑制（同一资源只有一个goroutine请求）可加分（不需要考虑cache更新问题和LRU）"><a href="#题目七：修改以下代码，实现并发安全的cache机制，如果可以实现重复抑制（同一资源只有一个goroutine请求）可加分（不需要考虑cache更新问题和LRU）" class="headerlink" title="题目七：修改以下代码，实现并发安全的cache机制，如果可以实现重复抑制（同一资源只有一个goroutine请求）可加分（不需要考虑cache更新问题和LRU）"></a>题目七：修改以下代码，实现并发安全的cache机制，如果可以实现重复抑制（同一资源只有一个goroutine请求）可加分（不需要考虑cache更新问题和LRU）</h4><pre><code>package main
+
+import (
+    &quot;io/ioutil&quot;
+    &quot;net/http&quot;
+)
+
+func main() {
+    http.HandleFunc(&quot;/&quot;, func(w http.ResponseWriter, r *http.Request) {
+        r.ParseForm()
+        if len(r.Form[&quot;url&quot;]) &gt; 0 {
+            body, _ := fetch(r.Fomr[&quot;url&quot;][0])
+            w.Writer(body)
+        }
+    })
+    http.ListenAndServe(&quot;:8000&quot;, nil)
+}
+
+func fetch(url string) ([]byte, error) {
+    resp, err := http.Get(url)
+    if err != nil {
+        return nil, err
+    }
+    defer resp.Close()
+    return ioutil.ReadAll(resp.body)
+}</code></pre>
             </div>
             <hr/>
 
@@ -415,7 +494,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://atidat.github.io/2020/04/04/%E5%90%8C%E8%8A%B1%E9%A1%BA%E7%AC%94%E8%AF%95-md/">https://atidat.github.io/2020/04/04/%E5%90%8C%E8%8A%B1%E9%A1%BA%E7%AC%94%E8%AF%95-md/</a>
+                    <a href="https://atidat.github.io/2020/04/03/%E5%90%8C%E8%8A%B1%E9%A1%BA%E7%AC%94%E8%AF%95%E9%A2%98/">https://atidat.github.io/2020/04/03/%E5%90%8C%E8%8A%B1%E9%A1%BA%E7%AC%94%E8%AF%95%E9%A2%98/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -616,10 +695,9 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
                 <a href="/2020/04/04/%E5%90%8C%E8%8A%B1%E9%A1%BA%E7%AC%94%E8%AF%95-md/">
                     <div class="card-image">
@@ -637,9 +715,9 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-04-03
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-04-03
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -648,7 +726,6 @@
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>
@@ -659,30 +736,26 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/04/03/%E5%90%8C%E8%8A%B1%E9%A1%BA%E7%AC%94%E8%AF%95%E9%A2%98/">
+                <a href="/2020/03/02/%E5%85%B3%E7%88%B1%E5%84%BF%E7%AB%A5%E6%88%90%E9%95%BF/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="同花顺笔试题">
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="关爱儿童成长">
                         
-                        <span class="card-title">同花顺笔试题</span>
+                        <span class="card-title">关爱儿童成长</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            记一次同花顺golang笔试题    
-题目一：读取文件重复行import (
-    &quot;os&quot;
-    &quot;bufio&quot;
-)
-
-func getRepeatedLines(file string) m
+                            
+《小委托人》本着消磨时间的打算，看了这部早早下载却一直在手机里吃灰的《小委托人》，很难受。我想，影片中暴露在我眼前的这些罪行，也许只是冰山下的一角。法律所统计到的受伤害的孩子，也许还有不少在忍受煎熬。  
+愤怒 对于感性的我，看到这些施虐
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-04-03
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-03-01
                             </span>
                         <span class="publish-author">
                             
@@ -691,6 +764,14 @@ func getRepeatedLines(file string) m
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E7%94%9F%E6%B4%BB%E9%9A%8F%E7%AC%94/">
+                        <span class="chip bg-color">生活随笔</span>
+                    </a>
+                    
                 </div>
                 
             </div>
