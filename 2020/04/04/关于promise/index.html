@@ -4,14 +4,10 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="同花顺笔试题, atidat,生活随笔,技术积累">
-    <meta name="description" content="记一次同花顺golang笔试题    
-题目一：读取文件重复行import (
-    &amp;quot;os&amp;quot;
-    &amp;quot;bufio&amp;quot;
-)
-
-func getRepeatedLines(file string) m">
+    <meta name="keywords" content="关于promise, atidat,生活随笔,技术积累">
+    <meta name="description" content="归档下阮一峰《ECMAScript6》之Promise对象
+初窥PromisePromise：抽象层面：可以看作为一个容器，保存着某个未来才会结束的事件（异步操作）代码层面：是一个对象，从它获取异步操作的消息   
+Primose状态1、对">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +15,7 @@ func getRepeatedLines(file string) m">
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>同花顺笔试题 | 春花秋月何时了</title>
+    <title>关于promise | 春花秋月何时了</title>
     <link rel="icon" type="image/jpeg" href="/logo.jpg">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -240,12 +236,12 @@ func getRepeatedLines(file string) m">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">同花顺笔试题</h1>
+                    <h1 class="description center-align post-title">关于promise</h1>
                 </div>
             </div>
         </div>
@@ -374,7 +370,7 @@ func getRepeatedLines(file string) m">
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-04-03
+                    2020-04-04
                 </div>
                 
 
@@ -396,121 +392,188 @@ func getRepeatedLines(file string) m">
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>记一次同花顺golang笔试题    </p>
-<h4 id="题目一：读取文件重复行"><a href="#题目一：读取文件重复行" class="headerlink" title="题目一：读取文件重复行"></a>题目一：读取文件重复行</h4><pre><code>import (
-    &quot;os&quot;
-    &quot;bufio&quot;
-)
-
-func getRepeatedLines(file string) map[string]bool {
-    // file := &quot;D:\\Projects\\leetcode\\example.log&quot;
-
-    if _, err := os.Stat(file); os.IsNotExist(err) {
-        fmt.Println(&quot;File Is Not Existed.&quot;)
-        return 
+                <p>归档下阮一峰《ECMAScript6》之Promise对象</p>
+<h1 id="初窥Promise"><a href="#初窥Promise" class="headerlink" title="初窥Promise"></a>初窥Promise</h1><p>Promise：<br>抽象层面：可以看作为一个容器，保存着某个未来才会结束的事件（异步操作）<br>代码层面：是一个对象，从它获取异步操作的消息   </p>
+<h2 id="Primose状态"><a href="#Primose状态" class="headerlink" title="Primose状态"></a>Primose状态</h2><p>1、对象的状态不受外界影响。<br>    1.1、Promise对象代表一个异步操作，始终处于以下的某一种状态：pending（进行中）、fulfilled（已成功）、rejected（已失效）<br>    1.2、只有异步操作的结果，才决定当前的状态<br>2、一旦对象状态改变，就不会再变，任何时候都可以得到这个结果。<br>    2.1、以下两种情况才会导致状态改变：pending -&gt; fulfilled 和 pending -&gt; rejected.<br>    2.2、状态凝固了，称为resolved. 此时，再对Promise对象添加回调函数，也会立即得到结果。   </p>
+<h2 id="Promise缺点"><a href="#Promise缺点" class="headerlink" title="Promise缺点"></a>Promise缺点</h2><p>1、无法取消Promise. 新建后立刻执行，无法取消<br>2、若不设置回调函数，Promise内部抛出的函数，不会反馈到外部<br>3、处于pending状态时，无法得知进展到哪一阶段（刚开始 or 结束）</p>
+<h1 id="Promise基本用法"><a href="#Promise基本用法" class="headerlink" title="Promise基本用法"></a>Promise基本用法</h1><h2 id="一个Promise实例"><a href="#一个Promise实例" class="headerlink" title="一个Promise实例"></a>一个Promise实例</h2><pre><code>const promise = new Promise(function(resolve, reject) {
+    // business code
+    if(/*异步操作成功*/) {
+        resolve(value);
+    } else{
+        reject(error);
     }
-
-    fd, err := os.Open(file)
-    if err != nil {
-        fmt.Println(&quot;Open File Failed.&quot;)
-        return
-    }
-
-    repo := make(map[string]bool, 0)
-    stream := bufio.NewReader(fd)
-    for {
-        line, err := stream.ReadBytes(&#39;\n&#39;)
-        // fmt.Print(string(line))
-
-        if _, ok := repo[string(line)]; !ok {
-            repo[string(line)] = true
-        }
-        if err == io.EOF {
-            fmt.Println(&quot;Read File Ended&quot;)
-            break
-        }
-    }
-
-    // fmt.Printf(&quot;%v&quot;, repo)
-}</code></pre><h4 id="题目二：slice由哪几个部分构成？如下代码输出为？"><a href="#题目二：slice由哪几个部分构成？如下代码输出为？" class="headerlink" title="题目二：slice由哪几个部分构成？如下代码输出为？"></a>题目二：slice由哪几个部分构成？如下代码输出为？</h4><pre><code>s := []int{}
-fmt.Println(s == nil)</code></pre><p>slice结构体：</p>
-<pre><code>type slice struct {
-    ptr *Elem   // 指向数组的指针
-    len int     // 切片长度
-    cap int     // 切片容量
-}</code></pre><p>输出：false<br>解释：s虽然被赋了个空值，但类型其实是个[]int类型，和nil无法比较。</p>
-<h4 id="题目三：反转整数数组的顺序"><a href="#题目三：反转整数数组的顺序" class="headerlink" title="题目三：反转整数数组的顺序"></a>题目三：反转整数数组的顺序</h4><pre><code>func revert(nums []int) []int {
-    if len(nums) == 0 {
-        return nums
-    }
-
-    for i := 0; i &lt; len(nums)/2; i++ {
-        nums[i], nums[len(nums)-1-i] = nums[len(nums)-1-i], nums[i]
-    }
-    return nums
-}</code></pre><h4 id="题目四：协程和线程的区别"><a href="#题目四：协程和线程的区别" class="headerlink" title="题目四：协程和线程的区别"></a>题目四：协程和线程的区别</h4><p>1、协程由线程调度管理<br>2、协程间切换由用户态代码实现，线程间切换由内核态切换实现<br>3、协程内存占用少   </p>
-<h4 id="题目五：想要并发输出0-9，以下代码是否存在问题，应该如何改进呢？"><a href="#题目五：想要并发输出0-9，以下代码是否存在问题，应该如何改进呢？" class="headerlink" title="题目五：想要并发输出0-9，以下代码是否存在问题，应该如何改进呢？"></a>题目五：想要并发输出0-9，以下代码是否存在问题，应该如何改进呢？</h4><pre><code>package main
-
-import &quot;fmt&quot;
-
-func main() {
-    for i := 0; i &lt; 10; i++ {
-        go func() {
-            fmt.Println(i)
-        }()
-    }
-}</code></pre><pre><code>[solution 1]
-func main() {
-    wg := sync.WaitGroup{}
-    wg.Add(10)
-
-    for i := 0; i &lt; 10; i++ 
-        go func(i int) {
-            fmt.Println(&quot;current: &quot;, i)
-            wg.Done()
-        }(i)
-    }
-    wg.Wait()
-}</code></pre><pre><code>[solution 2]
-// 解法有问题，未能输出10个数
-func main() {
-    ch := make(chan int, 0)
-    for i := 0; i &lt; 10; i++ {
-        go func(ch &lt;-chan int) {
-            i := &lt;-ch
-            fmt.Println(i)
-            &lt;-ch
-        }(ch)
-
-        ch &lt;- i
-    }
-    close(ch)
-}</code></pre><h4 id="题目六：分享下项目中goroutine泄露的排查经历-or-手写一段goroutine泄露代码"><a href="#题目六：分享下项目中goroutine泄露的排查经历-or-手写一段goroutine泄露代码" class="headerlink" title="题目六：分享下项目中goroutine泄露的排查经历 or 手写一段goroutine泄露代码"></a>题目六：分享下项目中goroutine泄露的排查经历 or 手写一段goroutine泄露代码</h4><h4 id="题目七：修改以下代码，实现并发安全的cache机制，如果可以实现重复抑制（同一资源只有一个goroutine请求）可加分（不需要考虑cache更新问题和LRU）"><a href="#题目七：修改以下代码，实现并发安全的cache机制，如果可以实现重复抑制（同一资源只有一个goroutine请求）可加分（不需要考虑cache更新问题和LRU）" class="headerlink" title="题目七：修改以下代码，实现并发安全的cache机制，如果可以实现重复抑制（同一资源只有一个goroutine请求）可加分（不需要考虑cache更新问题和LRU）"></a>题目七：修改以下代码，实现并发安全的cache机制，如果可以实现重复抑制（同一资源只有一个goroutine请求）可加分（不需要考虑cache更新问题和LRU）</h4><pre><code>package main
-
-import (
-    &quot;io/ioutil&quot;
-    &quot;net/http&quot;
-)
-
-func main() {
-    http.HandleFunc(&quot;/&quot;, func(w http.ResponseWriter, r *http.Request) {
-        r.ParseForm()
-        if len(r.Form[&quot;url&quot;]) &gt; 0 {
-            body, _ := fetch(r.Fomr[&quot;url&quot;][0])
-            w.Writer(body)
-        }
-    })
-    http.ListenAndServe(&quot;:8000&quot;, nil)
+})</code></pre><p>1、Promise构造函数接收一个函数作为参数，该函数的参数为resolve和reject. resolve和reject时JavaScript提供的函数<br>2、resolve：将Promise对象状态从 pending -&gt; fulfilled. 异步操作成功时调用，将异步操作的结果，作为参数传递出去<br>3、reject：将Promise对象状态从 pending -&gt; rejected. 异步操作失败时调用，将异步操作抛出错误，作为参数传递出去   </p>
+<h2 id="then"><a href="#then" class="headerlink" title=".then()"></a>.then()</h2><pre><code>promise.then(function(value) {
+    // success
+}, function(error) {
+    // failure
+})</code></pre><p>1、生成Promise实例后，用then方法分别指定resolved状态和reject状态的回调函数<br>2、then方法接收两个回调函数作为参数，第二个回调函数可选。第一个回调函数是Promise对象的状态变为resolved调用，第二个回调函数是Promise对象的状态变为rejected时调用。   </p>
+<pre><code>function timeout(ms) {
+    return new Promise(function(reslove, reject) {
+        console.log(&#39;Promise&#39;);
+        setTimeout(resolve, ms, &#39;done&#39;)；
+    })；
 }
 
-func fetch(url string) ([]byte, error) {
-    resp, err := http.Get(url)
-    if err != nil {
-        return nil, err
+timetout(100).then((value) =&gt; {
+    console.log(value);
+})</code></pre><p>上述代码，timeout方法返回一个Promise实例，表示一段时间后发生的结果。过了指定时间后，Promise实例状态变为resolved，触发then方法绑定的回调函数</p>
+<pre><code>let promise = new Promise(function(resolve, reject) {
+    console.log(&#39;Promise);
+    resolve();
+});
+
+promise.then(funciton() {
+    console.log(&#39;resolve.&#39;);
+});
+
+console.log(&#39;Hi&#39;);
+
+// output:
+//      Promise
+//      Hi
+//      resolve.
+// 解释：Promise新建后立刻执行，首先输出Promise，而then方法指定的回调函数，将在当前脚本所有同步任务执行完才执行，故&quot;resolve&quot;最后执行</code></pre><p>异步加载图片</p>
+<pre><code>function loadImageAsync(url) {
+    return new Promise(function(resolve, reject) {
+        const image = new Image();
+        image.onload = function() {
+            resolve(image);
+        }
+
+        image.onerror = function() {
+            reject(new Error(&#39;could not load image&#39;));
+        }
+        image.src= url;        
+    });
+}</code></pre><p>Ajax操作</p>
+<pre><code>const getJson = function(url) {
+    const promise = new Promise(function(resolve, reject) {
+        const handle = function() {
+            if (this.readyState !=== 4) {
+                return;
+            }
+            if (this.status === 200) {
+                resolve(this.response);
+            } else {
+                reject(new Error(this.statusText));
+            }
+        };
+
+        const client = new XMLHttpRequest();
+        // do some client code
+    });
+    return promise;
+}
+
+getJson(&quot;/posts.json&quot;).then(function(json) {
+    console.log(&#39;Contentes: &#39; + json);
+}, function(error) {
+    console.error(&#39;corrupted: &#39;, error)
+});</code></pre><p>1、resolve和reject函数带有参数，那么它们的参数会被传递给回调函数。<br>2、reject参数通常为Error对象的实例<br>3、resolve函数除了为普通值，还可以为一个新的promise。如</p>
+<pre><code>const p1 = new Promise(function(resovle, reject) {});
+const p2 = new Promise(function(resovle, reject) {
+    resolve(p1);
+});</code></pre><p>此时，p1的状态会传递给p2. 即p1的状态决定p2的状态。若p1是pending，则p2也是pending；若p1是resolved or rejected，则p2的回调函数立刻执行。   </p>
+<h2 id="深入-then"><a href="#深入-then" class="headerlink" title="深入.then()"></a>深入.then()</h2><p>1、then方法返回的是一个新的Promise实例，则可以写链式then方法。如：</p>
+<pre><code>getJson(&quot;./posts.json&quot;).then(function(json) {
+    return json.post;
+}).then(function(post) {
+    // ...
+});</code></pre><p>2、箭指函数写法</p>
+<pre><code>getJson(&quot;./posts.json&quot;).then(
+    post =&gt; getJson(post.commentURL)
+).then(
+    comments =&gt; console.log(&quot;resolved: &quot;, comments),
+    err =&gt; console.log(&quot;rejected: &quot;, err)
+);</code></pre><h2 id="catch"><a href="#catch" class="headerlink" title=".catch()"></a>.catch()</h2><p>指定发生错误时的回调函数，是then(null, rejection) or then(undefined, rejection)的别名。</p>
+<pre><code>getJson(&quot;./posts.json&quot;).then(
+    posts =&gt; // ...
+).catch(
+    error =&gt; console.log(&#39;corrupted error&#39;, error);
+);</code></pre><p>异步操作抛出错误和then方法抛出错误都会被catch方法捕获   </p>
+<p>前面说过，then方法一般只写resolved状态的函数，rejected状态的函数总在catch方法使用。如：</p>
+<pre><code>// bad code
+promise.then(
+    data =&gt; {};
+    err =&gt; {};
+);
+
+// good code
+promise.then(
+    data =&gt; {};
+).catch(
+    err =&gt; {};
+);</code></pre><h2 id="finally"><a href="#finally" class="headerlink" title=".finally()"></a>.finally()</h2><p>不管Promise对象状态如何，finally方法，保证其内部代码都会执行。<br>.finally()的回调函数不接受任何参数，即不依赖于Promise的执行结果。   </p>
+<h2 id="all"><a href="#all" class="headerlink" title=".all()"></a>.all()</h2><p>.all()将多个Promise实例，包装成一个新的Promise实例。如：</p>
+<pre><code>const p = Promise.all([p1, p2, p3]);</code></pre><p>p的状态由p1、p2和p3决定，分成两种情况：<br>1、p1、p2、p3的状态都变成fulfilled，p的状态也变成fulfilled。此时，p1、p2、p3的返回值组成一个数组，传递给p的回调函数<br>2、p1、p2、p3任意一个被rejected，p的状态就变成rejected，此时第一个被reject实例的返回值，传递给p的回调函数</p>
+<pre><code>// getJson返回一个promise
+const promises = [2,3,5,7,11,13].map(
+    id =&gt; return getJson(&#39;/post/&#39; + id + &quot;.json&quot;);
+);
+
+Promise.all(promises).then(
+    posts =&gt; {}
+).catch(
+    reason =&gt; {}
+);</code></pre><h2 id="race-方法"><a href="#race-方法" class="headerlink" title=".race()方法"></a>.race()方法</h2><p>将多个Promise实例，包装成一个新的Promise实例。只要其中一个Promise实例改变状态，p的状态就随之改变。率先改变的实例的返回值，则传递给p的回调函数</p>
+<pre><code>const p = Promise.race([p1, p2, p3]);</code></pre><h2 id="allSettled"><a href="#allSettled" class="headerlink" title=".allSettled()"></a>.allSettled()</h2><p>1、将多个Promise实例，包装成一个新的Promise实例。只有所有实例都返回结果（无论fulfilled or rejected），包装才结束<br>2、返回新的Promise实例，结束只会返回fulfilled<br>3、Promise的监听函数接收到的参数是一个数组，每个成员对应一个传入.allSettled()的Promise实例</p>
+<pre><code>const resolved = new Promise.resolve(42);
+const rejected = new Promise.reject(-1);
+
+const allSettledPromise = Promise.allSettled([resolved, rejected);
+allSettledPromise.then(
+    results =&gt; console.log(results);
+);
+
+// output:
+//      [
+//          {status: &#39;fulfilled&#39;, value: 42},
+//          {status: &#39;rejected&#39;, reason: -1}
+//      ]</code></pre><h2 id="any"><a href="#any" class="headerlink" title=".any()"></a>.any()</h2><p>将多个Promise实例，包装成一个新的Promise实例<br>1、只要参数实例有一个变成fulfilled，新实例就会变成fulfilled<br>2、所有实例都变成rejected状态，新实例就会变成rejected<br>3、.any() 区别与 .race()：不会因为某个Promise变成rejected状态而结束</p>
+<h2 id="resolve"><a href="#resolve" class="headerlink" title=".resolve()"></a>.resolve()</h2><p>将现有对象转为Promise对象</p>
+<pre><code>const jsPromise = Promise.resolve($.ajax(&#39;/whaerer.json&#39;));</code></pre><pre><code>Promise.resolve(&#39;foo&#39;);
+// 等价于
+new Promise(
+    resolve =&gt; reslovle(&#39;foo&#39;)
+);</code></pre><p>Promise.resolve()参数分为四种情况：<br>1、Promise实例：不做修改，直接返回该实例<br>2、thenable对象：将该对象转为Promise对象，然后立即执行thenable对象的then方法</p>
+<pre><code>// thenable object
+let thenable = {
+    then: function(resolve, reject) {
+        resolve(42);
     }
-    defer resp.Close()
-    return ioutil.ReadAll(resp.body)
-}</code></pre>
+};
+
+//
+let p1 = Promise.resolve(thenable);
+p1.then(
+    value =&gt; console.log(value)
+)</code></pre><p>上述代码中，thenable对象的then方法执行后，对象p1的状态就变成resolved，从而立即执行最后then方法指定的回调函数 console.log(value)<br>3、非then方法对象 or 非对象：返回一个新的Promise对象，状态为resolved</p>
+<pre><code>const p = Promise.resolve(&#39;Hello&#39;);
+p.then(
+    s =&gt; console.log(s)
+);</code></pre><p>字符串’Hello’不属于异步操作，返回Promise的实例状态从一生成就是resolved，故回调函数立即执行<br>4、无参数：返回一个resolved状态的Promise对象（似乎同3一样）</p>
+<h2 id="reject"><a href="#reject" class="headerlink" title=".reject()"></a>.reject()</h2><p>Promise.reject(reason)：返回一个新的Promise实例，状态为rejected.<br>.reject()的参数，会原封不动地作为reject的理由，变成后续方法的参数</p>
+<pre><code>const p = Promise.reject(&#39;出错&#39;);
+// 等同于
+const p = new Promise((resolve, reject) =&gt; {
+    reject(&#39;出错&#39;)；
+})；
+p.then(null, s =&gt; console.log(s));</code></pre><h2 id="try"><a href="#try" class="headerlink" title=".try()"></a>.try()</h2><p>场景：不知道or不想区分，函数func是同步or异步，但想用Promise处理，用.then()指定下一步流程，.catch()处理抛出的错误</p>
+<pre><code>// [solutioin 1]:
+const f = () =&gt; console.log(&#39;now&#39;);
+(async () =&gt; f())();
+console.log(&#39;next&#39;);
+
+// [solition 2]:
+const f = () =&gt; console.log(&#39;now&#39;);
+(
+    () =&gt; new Promise(
+        resolve =&gt; resolve(f())
+    )
+)();
+console.log(&#39;next&#39;);</code></pre>
             </div>
             <hr/>
 
@@ -535,7 +598,7 @@ func fetch(url string) ([]byte, error) {
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://atidat.github.io/2020/04/03/%E5%90%8C%E8%8A%B1%E9%A1%BA%E7%AC%94%E8%AF%95%E9%A2%98/">https://atidat.github.io/2020/04/03/%E5%90%8C%E8%8A%B1%E9%A1%BA%E7%AC%94%E8%AF%95%E9%A2%98/</a>
+                    <a href="https://atidat.github.io/2020/04/04/%E5%85%B3%E4%BA%8Epromise/">https://atidat.github.io/2020/04/04/%E5%85%B3%E4%BA%8Epromise/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -736,9 +799,10 @@ func fetch(url string) ([]byte, error) {
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2020/04/04/%E5%85%B3%E4%BA%8Epromise/">
                     <div class="card-image">
@@ -758,9 +822,9 @@ Primose状态1、对
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-04-04
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-04-04
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -769,6 +833,7 @@ Primose状态1、对
                         </span>
                     </div>
                 </div>
+
                 
             </div>
         </div>
@@ -779,26 +844,30 @@ Primose状态1、对
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/03/02/%E5%85%B3%E7%88%B1%E5%84%BF%E7%AB%A5%E6%88%90%E9%95%BF/">
+                <a href="/2020/04/03/%E5%90%8C%E8%8A%B1%E9%A1%BA%E7%AC%94%E8%AF%95%E9%A2%98/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="关爱儿童成长">
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="同花顺笔试题">
                         
-                        <span class="card-title">关爱儿童成长</span>
+                        <span class="card-title">同花顺笔试题</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
-《小委托人》本着消磨时间的打算，看了这部早早下载却一直在手机里吃灰的《小委托人》，很难受。我想，影片中暴露在我眼前的这些罪行，也许只是冰山下的一角。法律所统计到的受伤害的孩子，也许还有不少在忍受煎熬。  
-愤怒 对于感性的我，看到这些施虐
+                            记一次同花顺golang笔试题    
+题目一：读取文件重复行import (
+    &quot;os&quot;
+    &quot;bufio&quot;
+)
+
+func getRepeatedLines(file string) m
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-03-01
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-04-03
                             </span>
                         <span class="publish-author">
                             
@@ -807,14 +876,6 @@ Primose状态1、对
                             
                         </span>
                     </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E7%94%9F%E6%B4%BB%E9%9A%8F%E7%AC%94/">
-                        <span class="chip bg-color">生活随笔</span>
-                    </a>
-                    
                 </div>
                 
             </div>
