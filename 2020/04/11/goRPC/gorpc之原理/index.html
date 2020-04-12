@@ -5,8 +5,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="goRPC原理, atidat,生活随笔,技术积累">
-    <meta name="description" content="什么是RPCRPC：Remote Procedure Call，即远程过程调用。通过本地计算机调用另一台远程计算机上的程序，不需要了解底层网络细节，使得整个过程就像本地调用一样方便。
-RPC调用过程复习下本地调用file, err := o">
+    <meta name="description" content="注：本文内容购买于掘金小册，仅做于个人学习。若有侵权，谢绝转载
+什么是RPCRPC：Remote Procedure Call，即远程过程调用。通过本地计算机调用另一台远程计算机上的程序，不需要了解底层网络细节，使得整个过程就像本地调用一样">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -395,7 +395,8 @@ RPC调用过程复习下本地调用file, err := o">
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="什么是RPC"><a href="#什么是RPC" class="headerlink" title="什么是RPC"></a><strong>什么是RPC</strong></h2><p>RPC：Remote Procedure Call，即远程过程调用。通过<strong>本地计算机调用另一台远程计算机上的程序，不需要了解底层网络细节</strong>，使得整个过程就像本地调用一样方便。</p>
+                <p><big>注：本文内容购买于掘金小册，仅做于个人学习。若有侵权，谢绝转载</big></p>
+<h2 id="什么是RPC"><a href="#什么是RPC" class="headerlink" title="什么是RPC"></a><strong>什么是RPC</strong></h2><p>RPC：Remote Procedure Call，即远程过程调用。通过<strong>本地计算机调用另一台远程计算机上的程序，不需要了解底层网络细节</strong>，使得整个过程就像本地调用一样方便。</p>
 <h2 id="RPC调用过程"><a href="#RPC调用过程" class="headerlink" title="RPC调用过程"></a><strong>RPC调用过程</strong></h2><h3 id="复习下本地调用"><a href="#复习下本地调用" class="headerlink" title="复习下本地调用"></a><strong>复习下本地调用</strong></h3><pre><code>file, err := os.Open(&quot;test.txt&quot;)
 b := make([]byte, 1024)
 file.Read(b)</code></pre><h3 id="RPC过程架构"><a href="#RPC过程架构" class="headerlink" title="RPC过程架构"></a><strong>RPC过程架构</strong></h3><p><img src="https://i.loli.net/2020/04/10/LZhtIVKcXwiWFpC.jpg" alt="RPC简单架构.jpg"><br>对于一次RPC调用，单独看客户端或者服务端，会发现和本地调用基本一样；区别，<strong>数据源不在本机而在远程主机</strong>，所以通过网络调用去获取数据。假设把<strong>网络调用的细节封装</strong>，使得其对客户端程序几乎完全无感知。这就是<big><strong>RPC需要解决的本质问题</strong></big></p>
