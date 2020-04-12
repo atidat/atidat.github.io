@@ -1,55 +1,115 @@
-extends base
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="归来半生，仍是少年"><meta name="keywords" content="atidat,生活随笔,技术积累"><link rel="stylesheet" type="text/css" href="//fonts.loli.net/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=2.0.5"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=2.0.5"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><title>同花顺笔试题 | 春花秋月何时了</title><meta name="generator" content="Hexo 4.2.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">同花顺笔试题</h1><a id="logo" href="/.">春花秋月何时了</a><p class="description">一切皆对象</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">同花顺笔试题</h1><div class="post-meta"><a href="/2020/04/03/%E5%90%8C%E8%8A%B1%E9%A1%BA%E7%AC%94%E8%AF%95%E9%A2%98/#comments" class="comment-count"></a><p><span class="date">Apr 03, 2020</span><span><i id="busuanzi_container_page_pv"><i id="busuanzi_value_page_pv"></i><i>点击</i></i></span></p></div><div class="post-content"><p>记一次同花顺golang笔试题    </p>
+<h4 id="题目一：读取文件重复行"><a href="#题目一：读取文件重复行" class="headerlink" title="题目一：读取文件重复行"></a>题目一：读取文件重复行</h4><pre><code>import (
+    &quot;os&quot;
+    &quot;bufio&quot;
+)
 
-block title
-  title= page.title + ' | ' + config.title
+func getRepeatedLines(file string) map[string]bool {
+    // file := &quot;D:\\Projects\\leetcode\\example.log&quot;
 
-block content
-  .post
-    h1.post-title= page.title
-    .post-meta
-      if theme.comment
-        include _partial/comment_count
-        +comment-count(page.path)
-      p
-        span.date= page.date.format(theme.date_formats.post)
-        if page.categories.length > 0
-          span
-            for category in page.categories.toArray()
-              a.category(href=url_for(category.path))= category.name
-        if theme.busuanzi == true
-          span
-            i#busuanzi_container_page_pv
-              i#busuanzi_value_page_pv
-              i= '' + __('hits')
-    .post-content
-      != page.content
-    if theme.copyright.enable
-      .post-copyright
-        blockquote
-          p=  __("copyright_author") + ": " + config.author
-          p= __("copyright_link") + ": "
-            a(href=url_for(config.url +'/'+ page.path))= config.url +'/'+ page.path
-          p!= __("copyright_notice") + ": " + (theme.copyright.describe ? theme.copyright.describe : __("copyright_details"))
-    include _partial/tag
-    .post-share
-      include _partial/share
-    include _partial/post_nav
-    #comments
-      include _partial/comments
+    if _, err := os.Stat(file); os.IsNotExist(err) {
+        fmt.Println(&quot;File Is Not Existed.&quot;)
+        return 
+    }
 
-block tocmodel
-  if theme.toc.enable == true
-    .widget(id='toc')
-      .widget-title
-        i(class='fa fa-fei')= __('contents')
-      != toc(page.content, {list_number: theme.toc.number})
+    fd, err := os.Open(file)
+    if err != nil {
+        fmt.Println(&quot;Open File Failed.&quot;)
+        return
+    }
 
-block pageOnly
-  #fullscreen-img.hide
-     span.close
-  script(type='text/javascript', src=url_for(theme.js) + '/imgview.js' + '?v=' + theme.version, async)
-  if theme.toc.enable == true
-    script(type='text/javascript', src=url_for(theme.js) + '/toctotop.js' + '?v=' + theme.version, async)
-  else
-    script(type='text/javascript', src=url_for(theme.js) + '/totop.js' + '?v=' + theme.version, async)
-  include _partial/comments_js
+    repo := make(map[string]bool, 0)
+    stream := bufio.NewReader(fd)
+    for {
+        line, err := stream.ReadBytes(&#39;\n&#39;)
+        // fmt.Print(string(line))
+
+        if _, ok := repo[string(line)]; !ok {
+            repo[string(line)] = true
+        }
+        if err == io.EOF {
+            fmt.Println(&quot;Read File Ended&quot;)
+            break
+        }
+    }
+
+    // fmt.Printf(&quot;%v&quot;, repo)
+}</code></pre><h4 id="题目二：slice由哪几个部分构成？如下代码输出为？"><a href="#题目二：slice由哪几个部分构成？如下代码输出为？" class="headerlink" title="题目二：slice由哪几个部分构成？如下代码输出为？"></a>题目二：slice由哪几个部分构成？如下代码输出为？</h4><pre><code>s := []int{}
+fmt.Println(s == nil)</code></pre><p>slice结构体：</p>
+<pre><code>type slice struct {
+    ptr *Elem   // 指向数组的指针
+    len int     // 切片长度
+    cap int     // 切片容量
+}</code></pre><p>输出：false<br>解释：s虽然被赋了个空值，但类型其实是个[]int类型，和nil无法比较。</p>
+<h4 id="题目三：反转整数数组的顺序"><a href="#题目三：反转整数数组的顺序" class="headerlink" title="题目三：反转整数数组的顺序"></a>题目三：反转整数数组的顺序</h4><pre><code>func revert(nums []int) []int {
+    if len(nums) == 0 {
+        return nums
+    }
+
+    for i := 0; i &lt; len(nums)/2; i++ {
+        nums[i], nums[len(nums)-1-i] = nums[len(nums)-1-i], nums[i]
+    }
+    return nums
+}</code></pre><h4 id="题目四：协程和线程的区别"><a href="#题目四：协程和线程的区别" class="headerlink" title="题目四：协程和线程的区别"></a>题目四：协程和线程的区别</h4><p>1、协程由线程调度管理<br>2、协程间切换由用户态代码实现，线程间切换由内核态切换实现<br>3、协程内存占用少   </p>
+<h4 id="题目五：想要并发输出0-9，以下代码是否存在问题，应该如何改进呢？"><a href="#题目五：想要并发输出0-9，以下代码是否存在问题，应该如何改进呢？" class="headerlink" title="题目五：想要并发输出0-9，以下代码是否存在问题，应该如何改进呢？"></a>题目五：想要并发输出0-9，以下代码是否存在问题，应该如何改进呢？</h4><pre><code>package main
+
+import &quot;fmt&quot;
+
+func main() {
+    for i := 0; i &lt; 10; i++ {
+        go func() {
+            fmt.Println(i)
+        }()
+    }
+}</code></pre><pre><code>[solution 1]
+func main() {
+    wg := sync.WaitGroup{}
+    wg.Add(10)
+
+    for i := 0; i &lt; 10; i++ 
+        go func(i int) {
+            fmt.Println(&quot;current: &quot;, i)
+            wg.Done()
+        }(i)
+    }
+    wg.Wait()
+}</code></pre><pre><code>[solution 2]
+// 解法有问题，未能输出10个数
+func main() {
+    ch := make(chan int, 0)
+    for i := 0; i &lt; 10; i++ {
+        go func(ch &lt;-chan int) {
+            i := &lt;-ch
+            fmt.Println(i)
+            &lt;-ch
+        }(ch)
+
+        ch &lt;- i
+    }
+    close(ch)
+}</code></pre><h4 id="题目六：分享下项目中goroutine泄露的排查经历-or-手写一段goroutine泄露代码"><a href="#题目六：分享下项目中goroutine泄露的排查经历-or-手写一段goroutine泄露代码" class="headerlink" title="题目六：分享下项目中goroutine泄露的排查经历 or 手写一段goroutine泄露代码"></a>题目六：分享下项目中goroutine泄露的排查经历 or 手写一段goroutine泄露代码</h4><h4 id="题目七：修改以下代码，实现并发安全的cache机制，如果可以实现重复抑制（同一资源只有一个goroutine请求）可加分（不需要考虑cache更新问题和LRU）"><a href="#题目七：修改以下代码，实现并发安全的cache机制，如果可以实现重复抑制（同一资源只有一个goroutine请求）可加分（不需要考虑cache更新问题和LRU）" class="headerlink" title="题目七：修改以下代码，实现并发安全的cache机制，如果可以实现重复抑制（同一资源只有一个goroutine请求）可加分（不需要考虑cache更新问题和LRU）"></a>题目七：修改以下代码，实现并发安全的cache机制，如果可以实现重复抑制（同一资源只有一个goroutine请求）可加分（不需要考虑cache更新问题和LRU）</h4><pre><code>package main
+
+import (
+    &quot;io/ioutil&quot;
+    &quot;net/http&quot;
+)
+
+func main() {
+    http.HandleFunc(&quot;/&quot;, func(w http.ResponseWriter, r *http.Request) {
+        r.ParseForm()
+        if len(r.Form[&quot;url&quot;]) &gt; 0 {
+            body, _ := fetch(r.Fomr[&quot;url&quot;][0])
+            w.Writer(body)
+        }
+    })
+    http.ListenAndServe(&quot;:8000&quot;, nil)
+}
+
+func fetch(url string) ([]byte, error) {
+    resp, err := http.Get(url)
+    if err != nil {
+        return nil, err
+    }
+    defer resp.Close()
+    return ioutil.ReadAll(resp.body)
+}</code></pre></div><div class="post-copyright"><blockquote><p>原文作者: atidat</p><p>原文链接: <a href="https://atidat.github.io/2020/04/03/同花顺笔试题/">https://atidat.github.io/2020/04/03/同花顺笔试题/</a></p><p>版权声明: 转载请注明出处(必须保留作者署名及链接)</p></blockquote></div><div class="tags"></div><div class="post-share"><div class="social-share"><span>分享到:</span></div></div><div class="post-nav"><a href="/2020/04/04/%E5%85%B3%E4%BA%8Epromise/" class="pre">关于promise</a><a href="/2020/03/02/%E5%85%B3%E7%88%B1%E5%84%BF%E7%AB%A5%E6%88%90%E9%95%BF/" class="next">关爱儿童成长</a></div><div id="comments"></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#题目一：读取文件重复行"><span class="toc-text">题目一：读取文件重复行</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#题目二：slice由哪几个部分构成？如下代码输出为？"><span class="toc-text">题目二：slice由哪几个部分构成？如下代码输出为？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#题目三：反转整数数组的顺序"><span class="toc-text">题目三：反转整数数组的顺序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#题目四：协程和线程的区别"><span class="toc-text">题目四：协程和线程的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#题目五：想要并发输出0-9，以下代码是否存在问题，应该如何改进呢？"><span class="toc-text">题目五：想要并发输出0-9，以下代码是否存在问题，应该如何改进呢？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#题目六：分享下项目中goroutine泄露的排查经历-or-手写一段goroutine泄露代码"><span class="toc-text">题目六：分享下项目中goroutine泄露的排查经历 or 手写一段goroutine泄露代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#题目七：修改以下代码，实现并发安全的cache机制，如果可以实现重复抑制（同一资源只有一个goroutine请求）可加分（不需要考虑cache更新问题和LRU）"><span class="toc-text">题目七：修改以下代码，实现并发安全的cache机制，如果可以实现重复抑制（同一资源只有一个goroutine请求）可加分（不需要考虑cache更新问题和LRU）</span></a></li></ol></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/04/12/goRPC/gorpc%E4%B9%8B%E6%A1%86%E6%9E%B6%E6%A6%82%E8%A7%88/">goRPC原理</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/12/%E6%99%93%E4%BF%A1%E8%A7%86%E9%A2%91%E9%9D%A2%E8%AF%95/">晓信视频面试</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/11/goRPC/gorpc%E4%B9%8B%E5%8E%9F%E7%90%86/">goRPC原理</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/07/%E5%90%8C%E8%8A%B1%E9%A1%BA%E8%A7%86%E9%A2%91%E9%9D%A2%E8%AF%95/">同花顺视频面试</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/%E5%85%B3%E4%BA%8Epromise/">关于promise</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/03/%E5%90%8C%E8%8A%B1%E9%A1%BA%E7%AC%94%E8%AF%95%E9%A2%98/">同花顺笔试题</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/02/%E5%85%B3%E7%88%B1%E5%84%BF%E7%AB%A5%E6%88%90%E9%95%BF/">关爱儿童成长</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/02/11/Go-1-13%E6%96%B0%E7%89%B9%E6%80%A7/">Go.1.13新特性</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/31/golang%E7%AE%80%E6%98%93%E7%89%88%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85/">golang简易版发布订阅</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/27/rip4kobe/">R.I.P For Kobe Bryant</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"><a href="/tags/%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85%E6%A8%A1%E5%9E%8B/" style="font-size: 15px;">发布订阅模型</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E9%9A%8F%E7%AC%94/" style="font-size: 15px;">生活随笔</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 15px;">面试</a> <a href="/tags/RPC/" style="font-size: 15px;">RPC</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/">2020</a><span class="archive-list-count">11</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |  <a href="/atom.xml">订阅本站</a> |  <a href="/about/">联系博主</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次，本站总访客数:<i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>人</p><p><span> Copyright &copy;<a href="/." rel="nofollow">atidat.</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/" target="_blank" rel="noopener"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script type="text/javascript" src="/js/search.json.js?v=2.0.5"></script><div id="fullscreen-img" class="hide"><span class="close"></span></div><script type="text/javascript" src="/js/imgview.js?v=2.0.5" async></script><script type="text/javascript" src="/js/toctotop.js?v=2.0.5" async></script><link rel="stylesheet" type="text/css" href="/share/css/share.css"><script type="text/javascript" src="/share/js/social-share.js" charset="utf-8"></script><script type="text/javascript" src="/share/js/qrcode.js" charset="utf-8"></script></body></html>

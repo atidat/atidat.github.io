@@ -1,55 +1,29 @@
-extends base
-
-block title
-  title= page.title + ' | ' + config.title
-
-block content
-  .post
-    h1.post-title= page.title
-    .post-meta
-      if theme.comment
-        include _partial/comment_count
-        +comment-count(page.path)
-      p
-        span.date= page.date.format(theme.date_formats.post)
-        if page.categories.length > 0
-          span
-            for category in page.categories.toArray()
-              a.category(href=url_for(category.path))= category.name
-        if theme.busuanzi == true
-          span
-            i#busuanzi_container_page_pv
-              i#busuanzi_value_page_pv
-              i= '' + __('hits')
-    .post-content
-      != page.content
-    if theme.copyright.enable
-      .post-copyright
-        blockquote
-          p=  __("copyright_author") + ": " + config.author
-          p= __("copyright_link") + ": "
-            a(href=url_for(config.url +'/'+ page.path))= config.url +'/'+ page.path
-          p!= __("copyright_notice") + ": " + (theme.copyright.describe ? theme.copyright.describe : __("copyright_details"))
-    include _partial/tag
-    .post-share
-      include _partial/share
-    include _partial/post_nav
-    #comments
-      include _partial/comments
-
-block tocmodel
-  if theme.toc.enable == true
-    .widget(id='toc')
-      .widget-title
-        i(class='fa fa-fei')= __('contents')
-      != toc(page.content, {list_number: theme.toc.number})
-
-block pageOnly
-  #fullscreen-img.hide
-     span.close
-  script(type='text/javascript', src=url_for(theme.js) + '/imgview.js' + '?v=' + theme.version, async)
-  if theme.toc.enable == true
-    script(type='text/javascript', src=url_for(theme.js) + '/toctotop.js' + '?v=' + theme.version, async)
-  else
-    script(type='text/javascript', src=url_for(theme.js) + '/totop.js' + '?v=' + theme.version, async)
-  include _partial/comments_js
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="归来半生，仍是少年"><meta name="keywords" content="atidat,生活随笔,技术积累"><link rel="stylesheet" type="text/css" href="//fonts.loli.net/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=2.0.5"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=2.0.5"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><title>同花顺视频面试 | 春花秋月何时了</title><meta name="generator" content="Hexo 4.2.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">同花顺视频面试</h1><a id="logo" href="/.">春花秋月何时了</a><p class="description">一切皆对象</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">同花顺视频面试</h1><div class="post-meta"><a href="/2020/04/07/%E5%90%8C%E8%8A%B1%E9%A1%BA%E8%A7%86%E9%A2%91%E9%9D%A2%E8%AF%95/#comments" class="comment-count"></a><p><span class="date">Apr 07, 2020</span><span><i id="busuanzi_container_page_pv"><i id="busuanzi_value_page_pv"></i><i>点击</i></i></span></p></div><div class="post-content"><p>匆匆记一次同花顺面试经历</p>
+<h1 id="简单介绍"><a href="#简单介绍" class="headerlink" title="简单介绍"></a>简单介绍</h1><p>balabala   </p>
+<h1 id="项目介绍"><a href="#项目介绍" class="headerlink" title="项目介绍"></a>项目介绍</h1><p>这块目前也没怎么准备，回答的很一般。   </p>
+<h1 id="C语言及项目相关"><a href="#C语言及项目相关" class="headerlink" title="C语言及项目相关"></a>C语言及项目相关</h1><h2 id="遇到的问题：踩内存如何解决"><a href="#遇到的问题：踩内存如何解决" class="headerlink" title="遇到的问题：踩内存如何解决"></a>遇到的问题：踩内存如何解决</h2><p>1、打印日志看内存指向的值和地址<br>2、gdb调试   </p>
+<h2 id="现在这类问题，有什么工具去排查"><a href="#现在这类问题，有什么工具去排查" class="headerlink" title="现在这类问题，有什么工具去排查"></a>现在这类问题，有什么工具去排查</h2><p>没回答上来（只点了下coredump）   </p>
+<h2 id="哪些情况会踩内存（内存泄露）"><a href="#哪些情况会踩内存（内存泄露）" class="headerlink" title="哪些情况会踩内存（内存泄露）"></a>哪些情况会踩内存（内存泄露）</h2><p>1、函数间调用（指针作为参数传递）<br>2、分配区域限制<br>3、其他情况没回答上来   </p>
+<h2 id="上述情况如何避免"><a href="#上述情况如何避免" class="headerlink" title="上述情况如何避免"></a>上述情况如何避免</h2><p>1、通过接口文档或swagger文档去说明<br>2、通过头文件说明   </p>
+<h2 id="C的面向对象的编程思想"><a href="#C的面向对象的编程思想" class="headerlink" title="C的面向对象的编程思想"></a>C的面向对象的编程思想</h2><p>没get到点   </p>
+<h2 id="实习期间嵌入式项目介绍"><a href="#实习期间嵌入式项目介绍" class="headerlink" title="实习期间嵌入式项目介绍"></a>实习期间嵌入式项目介绍</h2><p>balbala   </p>
+<h2 id="模块驱动软件"><a href="#模块驱动软件" class="headerlink" title="模块驱动软件"></a>模块驱动软件</h2><h2 id="串口协议"><a href="#串口协议" class="headerlink" title="串口协议"></a>串口协议</h2><p>忘了，没回答上来   </p>
+<h2 id="串口逻辑"><a href="#串口逻辑" class="headerlink" title="串口逻辑"></a>串口逻辑</h2><p>忘了，没回答上来</p>
+<h1 id="Golang语言及项目相关"><a href="#Golang语言及项目相关" class="headerlink" title="Golang语言及项目相关"></a>Golang语言及项目相关</h1><h2 id="Golang特性"><a href="#Golang特性" class="headerlink" title="Golang特性"></a>Golang特性</h2><p>1、高并发（GMP）<br>    1.1：G：协程；M：系统线程；P：Processor<br>2、“消息通信取代共享内存”<br>    2.1：对通道读取实现协程间通信   </p>
+<h2 id="如何实现定时任务"><a href="#如何实现定时任务" class="headerlink" title="如何实现定时任务"></a>如何实现定时任务</h2><p>1、语言自身有模块可实现<br>2、通过无缓存channel读写实现<br>3、通过加/解锁和全局status对定时任务操作   </p>
+<h2 id="上述话题后续两种，倾向"><a href="#上述话题后续两种，倾向" class="headerlink" title="上述话题后续两种，倾向"></a>上述话题后续两种，倾向</h2><p>倾向无缓存channel。解释了锁和全局status的劣势</p>
+<h2 id="GC"><a href="#GC" class="headerlink" title="GC"></a>GC</h2><p>没回答上来（算法+过程）</p>
+<h2 id="golang内存问题"><a href="#golang内存问题" class="headerlink" title="golang内存问题"></a>golang内存问题</h2><p>pprof，其他没回答上来</p>
+<h2 id="平时生活深入或感兴趣"><a href="#平时生活深入或感兴趣" class="headerlink" title="平时生活深入或感兴趣"></a>平时生活深入或感兴趣</h2><p>分布式，中间件</p>
+<h2 id="如何实现队列"><a href="#如何实现队列" class="headerlink" title="如何实现队列"></a>如何实现队列</h2><p>1、语言自身有模块<br>2、通过两个slice做为队列的基本元素</p>
+<h2 id="项目中go用的什么框架"><a href="#项目中go用的什么框架" class="headerlink" title="项目中go用的什么框架"></a>项目中go用的什么框架</h2><p>微服务框架：go-chassis<br>数据库：gorm<br>这里应该详述   </p>
+<h1 id="在职情况"><a href="#在职情况" class="headerlink" title="在职情况"></a>在职情况</h1><h2 id="离职原因"><a href="#离职原因" class="headerlink" title="离职原因"></a>离职原因</h2><p>这里不详细说了</p>
+<h2 id="职业发展规划（3-5年）"><a href="#职业发展规划（3-5年）" class="headerlink" title="职业发展规划（3~5年）"></a>职业发展规划（3~5年）</h2><p>还是写代码，写到架构师</p>
+<h2 id="项目版本迭代周期"><a href="#项目版本迭代周期" class="headerlink" title="项目版本迭代周期"></a>项目版本迭代周期</h2><p>大版本 one half year，日常版本 2 weeks</p>
+<h2 id="基于上述问题，如何管理项目"><a href="#基于上述问题，如何管理项目" class="headerlink" title="基于上述问题，如何管理项目"></a>基于上述问题，如何管理项目</h2><p>回答地不好，乱说一气</p>
+<h2 id="哪些项目最成功"><a href="#哪些项目最成功" class="headerlink" title="哪些项目最成功"></a>哪些项目最成功</h2><p>balabala，体现了参与度和责任感</p>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><h2 id="希望加入什么样地团队"><a href="#希望加入什么样地团队" class="headerlink" title="希望加入什么样地团队"></a>希望加入什么样地团队</h2><p>-。–！又是没想清楚乱回答<br>1、做一些代码开发、需求开发<br>2、团队文化：以开发者的身份去交流经验、业务   </p>
+<h2 id="薪资待遇"><a href="#薪资待遇" class="headerlink" title="薪资待遇"></a>薪资待遇</h2><p>基于当前面试情况和工作情况决定</p>
+<h2 id="有没有想问的"><a href="#有没有想问的" class="headerlink" title="有没有想问的"></a>有没有想问的</h2><p>没有。因为没想好，面试准备不够，该骂，没体现出应有的尊重。   </p>
+<h1 id="杂：扫码登陆描述下过程"><a href="#杂：扫码登陆描述下过程" class="headerlink" title="杂：扫码登陆描述下过程"></a>杂：扫码登陆描述下过程</h1><p>昨天在掘金稍微少了下，没细看。估计面试官也是掘金上看的</p>
+</div><div class="post-copyright"><blockquote><p>原文作者: atidat</p><p>原文链接: <a href="https://atidat.github.io/2020/04/07/同花顺视频面试/">https://atidat.github.io/2020/04/07/同花顺视频面试/</a></p><p>版权声明: 转载请注明出处(必须保留作者署名及链接)</p></blockquote></div><div class="tags"></div><div class="post-share"><div class="social-share"><span>分享到:</span></div></div><div class="post-nav"><a href="/2020/04/11/goRPC/gorpc%E4%B9%8B%E5%8E%9F%E7%90%86/" class="pre">goRPC原理</a><a href="/2020/04/04/%E5%85%B3%E4%BA%8Epromise/" class="next">关于promise</a></div><div id="comments"></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#简单介绍"><span class="toc-text">简单介绍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#项目介绍"><span class="toc-text">项目介绍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#C语言及项目相关"><span class="toc-text">C语言及项目相关</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#遇到的问题：踩内存如何解决"><span class="toc-text">遇到的问题：踩内存如何解决</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#现在这类问题，有什么工具去排查"><span class="toc-text">现在这类问题，有什么工具去排查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#哪些情况会踩内存（内存泄露）"><span class="toc-text">哪些情况会踩内存（内存泄露）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#上述情况如何避免"><span class="toc-text">上述情况如何避免</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#C的面向对象的编程思想"><span class="toc-text">C的面向对象的编程思想</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实习期间嵌入式项目介绍"><span class="toc-text">实习期间嵌入式项目介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模块驱动软件"><span class="toc-text">模块驱动软件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#串口协议"><span class="toc-text">串口协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#串口逻辑"><span class="toc-text">串口逻辑</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Golang语言及项目相关"><span class="toc-text">Golang语言及项目相关</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Golang特性"><span class="toc-text">Golang特性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如何实现定时任务"><span class="toc-text">如何实现定时任务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#上述话题后续两种，倾向"><span class="toc-text">上述话题后续两种，倾向</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GC"><span class="toc-text">GC</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#golang内存问题"><span class="toc-text">golang内存问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#平时生活深入或感兴趣"><span class="toc-text">平时生活深入或感兴趣</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如何实现队列"><span class="toc-text">如何实现队列</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#项目中go用的什么框架"><span class="toc-text">项目中go用的什么框架</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#在职情况"><span class="toc-text">在职情况</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#离职原因"><span class="toc-text">离职原因</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#职业发展规划（3-5年）"><span class="toc-text">职业发展规划（3~5年）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#项目版本迭代周期"><span class="toc-text">项目版本迭代周期</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基于上述问题，如何管理项目"><span class="toc-text">基于上述问题，如何管理项目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#哪些项目最成功"><span class="toc-text">哪些项目最成功</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#其他"><span class="toc-text">其他</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#希望加入什么样地团队"><span class="toc-text">希望加入什么样地团队</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#薪资待遇"><span class="toc-text">薪资待遇</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#有没有想问的"><span class="toc-text">有没有想问的</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#杂：扫码登陆描述下过程"><span class="toc-text">杂：扫码登陆描述下过程</span></a></li></ol></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/04/12/goRPC/gorpc%E4%B9%8B%E6%A1%86%E6%9E%B6%E6%A6%82%E8%A7%88/">goRPC原理</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/12/%E6%99%93%E4%BF%A1%E8%A7%86%E9%A2%91%E9%9D%A2%E8%AF%95/">晓信视频面试</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/11/goRPC/gorpc%E4%B9%8B%E5%8E%9F%E7%90%86/">goRPC原理</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/07/%E5%90%8C%E8%8A%B1%E9%A1%BA%E8%A7%86%E9%A2%91%E9%9D%A2%E8%AF%95/">同花顺视频面试</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/04/%E5%85%B3%E4%BA%8Epromise/">关于promise</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/03/%E5%90%8C%E8%8A%B1%E9%A1%BA%E7%AC%94%E8%AF%95%E9%A2%98/">同花顺笔试题</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/02/%E5%85%B3%E7%88%B1%E5%84%BF%E7%AB%A5%E6%88%90%E9%95%BF/">关爱儿童成长</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/02/11/Go-1-13%E6%96%B0%E7%89%B9%E6%80%A7/">Go.1.13新特性</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/31/golang%E7%AE%80%E6%98%93%E7%89%88%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85/">golang简易版发布订阅</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/27/rip4kobe/">R.I.P For Kobe Bryant</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"><a href="/tags/%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85%E6%A8%A1%E5%9E%8B/" style="font-size: 15px;">发布订阅模型</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E9%9A%8F%E7%AC%94/" style="font-size: 15px;">生活随笔</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 15px;">面试</a> <a href="/tags/RPC/" style="font-size: 15px;">RPC</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/">2020</a><span class="archive-list-count">11</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |  <a href="/atom.xml">订阅本站</a> |  <a href="/about/">联系博主</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次，本站总访客数:<i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>人</p><p><span> Copyright &copy;<a href="/." rel="nofollow">atidat.</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/" target="_blank" rel="noopener"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script type="text/javascript" src="/js/search.json.js?v=2.0.5"></script><div id="fullscreen-img" class="hide"><span class="close"></span></div><script type="text/javascript" src="/js/imgview.js?v=2.0.5" async></script><script type="text/javascript" src="/js/toctotop.js?v=2.0.5" async></script><link rel="stylesheet" type="text/css" href="/share/css/share.css"><script type="text/javascript" src="/share/js/social-share.js" charset="utf-8"></script><script type="text/javascript" src="/share/js/qrcode.js" charset="utf-8"></script></body></html>
