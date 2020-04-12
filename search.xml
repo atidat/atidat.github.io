@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>晓信视频面试</title>
+      <link href="/2020/04/12/%E6%99%93%E4%BF%A1%E8%A7%86%E9%A2%91%E9%9D%A2%E8%AF%95/"/>
+      <url>/2020/04/12/%E6%99%93%E4%BF%A1%E8%A7%86%E9%A2%91%E9%9D%A2%E8%AF%95/</url>
+      
+        <content type="html"><![CDATA[<ol><li><p>项目中提到了gorm, 请问下如果让你去设计orm，你会怎么做，你会考虑哪些点？</p><ul><li>没回答上来，之前头条面试也问过一次，没回答上来。现在这里根据网上查到的答案记录下。</li></ul></li><li><p>项目中提到了主备选举，能大概讲一下什么是主备选举嘛？你了解raft协议吗？</p><ul><li>基于 <em>etcd</em> 实现的选举服务提供主备选举的能力。对于分布式服务，进行数据库写的时候，只要一个进程才能完成。此时可以通过主备机的概念，形成 <em>一主多备</em>，由主机去处理业务。容灾时，<em>主机降备</em>，选举服务 <em>重新选举</em>，选出一个新的主，完成容灾切换。（待完善回答）</li><li>未接触过raft协议，似乎不好理解（待完善回答） </li></ul></li><li><p>协程间切换是在内核态完成，线程间切换是在用户态完成。衍生出一个问题，用户态和内核态区别在哪？（待完善回答）</p><ul><li>特权指令的执行权限。cpu根据指令危险程度划分四个级别：RING0、RING1、RING2和RING3。用户态代码只能执行RING3级别的指令，</li><li>提供统一的应用层接口</li></ul></li><li><h2 id="对RPC理解？（看完gorpc小册后再来回答）"><a href="#对RPC理解？（看完gorpc小册后再来回答）" class="headerlink" title="对RPC理解？（看完gorpc小册后再来回答）"></a>对RPC理解？（看完gorpc小册后再来回答）</h2><ul><li></li><li></li></ul></li><li><h2 id="描述下OSI7层协议"><a href="#描述下OSI7层协议" class="headerlink" title="描述下OSI7层协议"></a>描述下OSI7层协议</h2></li><li><p>TCP和UDP区别？你说QQ消息是基于UDP协议，那他是怎么解决丢包问题呢？</p></li><li><p>对微服务的理解？服务发现？</p></li><li><p>对鉴权的理解</p></li></ol>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 面试 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>同花顺视频面试</title>
       <link href="/2020/04/07/%E5%90%8C%E8%8A%B1%E9%A1%BA%E8%A7%86%E9%A2%91%E9%9D%A2%E8%AF%95/"/>
       <url>/2020/04/07/%E5%90%8C%E8%8A%B1%E9%A1%BA%E8%A7%86%E9%A2%91%E9%9D%A2%E8%AF%95/</url>
@@ -118,6 +137,25 @@
         <tags>
             
             <tag> 生活随笔 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>goRPC原理</title>
+      <link href="/2020/01/27/goRPC/gorpc%E4%B9%8B%E5%8E%9F%E7%90%86/"/>
+      <url>/2020/01/27/goRPC/gorpc%E4%B9%8B%E5%8E%9F%E7%90%86/</url>
+      
+        <content type="html"><![CDATA[<h2 id="什么是RPC"><a href="#什么是RPC" class="headerlink" title="什么是RPC"></a><strong>什么是RPC</strong></h2><p>RPC：Remote Procedure Call，即远程过程调用。通过<strong>本地计算机调用另一台远程计算机上的程序，不需要了解底层网络细节</strong>，使得整个过程就像本地调用一样方便。</p><h2 id="RPC调用过程"><a href="#RPC调用过程" class="headerlink" title="RPC调用过程"></a><strong>RPC调用过程</strong></h2><h3 id="复习下本地调用"><a href="#复习下本地调用" class="headerlink" title="复习下本地调用"></a><strong>复习下本地调用</strong></h3><pre><code>file, err := os.Open(&quot;test.txt&quot;)b := make([]byte, 1024)file.Read(b)</code></pre><h3 id="RPC过程架构"><a href="#RPC过程架构" class="headerlink" title="RPC过程架构"></a><strong>RPC过程架构</strong></h3><p><img src="https://i.loli.net/2020/04/10/LZhtIVKcXwiWFpC.jpg" alt="RPC简单架构.jpg"><br>对于一次RPC调用，单独看客户端或者服务端，会发现和本地调用基本一样；区别，<strong>数据源不在本机而在远程主机</strong>，所以通过网络调用去获取数据。假设把<strong>网络调用的细节封装</strong>，使得其对客户端程序几乎完全无感知。这就是<big><strong>RPC需要解决的本质问题</strong></big></p><h2 id="一次RPC调用涉及的环节"><a href="#一次RPC调用涉及的环节" class="headerlink" title="一次RPC调用涉及的环节"></a><strong>一次RPC调用涉及的环节</strong></h2><p>Socket、协议、寻址、序列化和反序列化、异常处理</p><h3 id="Socket"><a href="#Socket" class="headerlink" title="Socket"></a><strong>Socket</strong></h3><p>socket：计算机间通信的约定或方式</p><h3 id="协议"><a href="#协议" class="headerlink" title="协议"></a><strong>协议</strong></h3><p>协议：tcp、udp、http</p><h3 id="寻址的两个过程"><a href="#寻址的两个过程" class="headerlink" title="寻址的两个过程"></a>寻址的两个过程</h3><ol><li>服务发现：通过域名或者服务名找到服务器的所有IP</li><li>负载均衡：在上述所有IP中，选择一个IP接收、处理客户端请求</li></ol><p><em>我觉的这两点阐述的太不专业了</em></p><h3 id="序列化和反序列化"><a href="#序列化和反序列化" class="headerlink" title="序列化和反序列化"></a>序列化和反序列化</h3><ol><li>序列化：对象类型 –&gt; 二进制流</li><li>反序列化：二进制流 –&gt; 对象类型<br>客户端（序列化） -&gt; &lt;我是网络&gt;二进制流&lt;/我是网络&gt; -&gt; 服务端（反序列化）<br>常用序列化方式：json、protobuf、flattbuffers</li></ol><h3 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h3><p>当一次RPC出错了，如何判断是在客户端、服务端或中间链路，又或是网络超时和丢包呢？<br>暂不抛出<strong>服务治理</strong>的概念（包含服务发现、负载均衡、限流、熔断、超时、重试和服务追踪）</p><h2 id="RPC需要解决的问题"><a href="#RPC需要解决的问题" class="headerlink" title="RPC需要解决的问题"></a>RPC需要解决的问题</h2><ol><li>开发效率：避免每次RPC进行重复的socket操作、序列话和反序列化、协议解析、寻址处理和异常处理</li><li>通信效率：<ul><li>为了避免每次建立请求都重新创建和销毁，通常采用长连接</li><li>客户端的话，使用连接池进行连接复用</li></ul></li><li>数据传输<ul><li>序列化：需要支持多种序列化方式 &amp;&amp; 支持业务自定义</li><li>传输效率：传输数据包大小和协议（后续章节详述，记得这里标注相应章节号）</li></ul></li><li>通用化：<ul><li>所有组件<strong>可插拔</strong></li><li>所有组件支持<strong>业务自定义</strong></li></ul></li><li>服务治理</li></ol>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> RPC </tag>
             
         </tags>
       

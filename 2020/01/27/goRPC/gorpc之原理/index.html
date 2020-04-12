@@ -4,9 +4,9 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="闲聊记事（一）, atidat,生活随笔,技术积累">
-    <meta name="description" content="关于新型冠状病毒截至到现在（1月26日 23：31），丁香网实时统计的全国确诊人数已达2076例。从前，这些数字，我往往无感，总觉得太遥远。如今，这些数字却化为了恐惧，如同羊水般包裹在周围。   
-我一直以为自己不怕死，看来还是高估了自己。">
+    <meta name="keywords" content="goRPC原理, atidat,生活随笔,技术积累">
+    <meta name="description" content="什么是RPCRPC：Remote Procedure Call，即远程过程调用。通过本地计算机调用另一台远程计算机上的程序，不需要了解底层网络细节，使得整个过程就像本地调用一样方便。
+RPC调用过程复习下本地调用file, err := o">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +14,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>闲聊记事（一） | 春花秋月何时了</title>
+    <title>goRPC原理 | 春花秋月何时了</title>
     <link rel="icon" type="image/jpeg" href="/logo.jpg">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -235,12 +235,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/20.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">闲聊记事（一）</h1>
+                    <h1 class="description center-align post-title">goRPC原理</h1>
                 </div>
             </div>
         </div>
@@ -357,8 +357,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E7%94%9F%E6%B4%BB%E9%9A%8F%E7%AC%94/">
-                                <span class="chip bg-color">生活随笔</span>
+                            <a href="/tags/RPC/">
+                                <span class="chip bg-color">RPC</span>
                             </a>
                         
                     </div>
@@ -395,15 +395,42 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="关于新型冠状病毒"><a href="#关于新型冠状病毒" class="headerlink" title="关于新型冠状病毒"></a>关于新型冠状病毒</h2><p>截至到现在（1月26日 23：31），丁香网实时统计的全国确诊人数已达2076例。从前，这些数字，我往往无感，总觉得太遥远。如今，这些数字却化为了恐惧，如同羊水般包裹在周围。   </p>
-<p>我一直以为自己不怕死，看来还是高估了自己。现在才发现，如果人都是突然间死亡的，那么怕是没有人会恐惧死亡。最令人害怕的，还是死亡逼近的过程，亦或是拖拉着镰刀而来的死神，一步步靠近。这种感觉，真tn的刺激。   </p>
-<p>今日凌晨刷虎扑，不时看到几个放出口罩链接的帖子，每每点击进去一看，都是售罄。明日还是去劳保市场看看是否有口罩卖吧。   </p>
-<h2 id="关于春节"><a href="#关于春节" class="headerlink" title="关于春节"></a>关于春节</h2><p>现在还是庚子年元月初二，晚上也草草地回到了杭州。回到房间后，从没聊过天的室友们，一个都没回来，也是哦，这个点都是在家里。寻摸着一个便利店买了一大瓶水后，便又回了房间。   </p>
-<p>今年，哦不，去年的大年三十，对即将来到的新的一年完全没有期盼，因此也没有许愿的念头。偶尔的祝福短信，也礼貌而简洁地回复了。   </p>
-<p>至于为什么会这样，我想是2019年过的并不如意。年初、年中，工作上各种波折、失意；年末，生活上又遭遇打击。想了想，现在也算是心态好。安于现状，但也试图改变。   </p>
-<p>好在，我也完全不记得前年许下的愿望，所以就让失意的2019失忆下去吧。生活的琐事总是不记得这也是我为数不多的优点了。</p>
-<h2 id="结束"><a href="#结束" class="headerlink" title="结束"></a>结束</h2><p>摸鱼摸到初三凌晨了，略有睡意。ipad上的爱情公寓5这一集也快放完了，那就洗洗睡吧。    </p>
-<p><img src="https://i.loli.net/2020/01/27/rKYtTXmngJkUpa8.jpg" alt="晚安.jpg"></p>
+                <h2 id="什么是RPC"><a href="#什么是RPC" class="headerlink" title="什么是RPC"></a><strong>什么是RPC</strong></h2><p>RPC：Remote Procedure Call，即远程过程调用。通过<strong>本地计算机调用另一台远程计算机上的程序，不需要了解底层网络细节</strong>，使得整个过程就像本地调用一样方便。</p>
+<h2 id="RPC调用过程"><a href="#RPC调用过程" class="headerlink" title="RPC调用过程"></a><strong>RPC调用过程</strong></h2><h3 id="复习下本地调用"><a href="#复习下本地调用" class="headerlink" title="复习下本地调用"></a><strong>复习下本地调用</strong></h3><pre><code>file, err := os.Open(&quot;test.txt&quot;)
+b := make([]byte, 1024)
+file.Read(b)</code></pre><h3 id="RPC过程架构"><a href="#RPC过程架构" class="headerlink" title="RPC过程架构"></a><strong>RPC过程架构</strong></h3><p><img src="https://i.loli.net/2020/04/10/LZhtIVKcXwiWFpC.jpg" alt="RPC简单架构.jpg"><br>对于一次RPC调用，单独看客户端或者服务端，会发现和本地调用基本一样；区别，<strong>数据源不在本机而在远程主机</strong>，所以通过网络调用去获取数据。假设把<strong>网络调用的细节封装</strong>，使得其对客户端程序几乎完全无感知。这就是<big><strong>RPC需要解决的本质问题</strong></big></p>
+<h2 id="一次RPC调用涉及的环节"><a href="#一次RPC调用涉及的环节" class="headerlink" title="一次RPC调用涉及的环节"></a><strong>一次RPC调用涉及的环节</strong></h2><p>Socket、协议、寻址、序列化和反序列化、异常处理</p>
+<h3 id="Socket"><a href="#Socket" class="headerlink" title="Socket"></a><strong>Socket</strong></h3><p>socket：计算机间通信的约定或方式</p>
+<h3 id="协议"><a href="#协议" class="headerlink" title="协议"></a><strong>协议</strong></h3><p>协议：tcp、udp、http</p>
+<h3 id="寻址的两个过程"><a href="#寻址的两个过程" class="headerlink" title="寻址的两个过程"></a>寻址的两个过程</h3><ol>
+<li>服务发现：通过域名或者服务名找到服务器的所有IP</li>
+<li>负载均衡：在上述所有IP中，选择一个IP接收、处理客户端请求</li>
+</ol>
+<p><em>我觉的这两点阐述的太不专业了</em></p>
+<h3 id="序列化和反序列化"><a href="#序列化和反序列化" class="headerlink" title="序列化和反序列化"></a>序列化和反序列化</h3><ol>
+<li>序列化：对象类型 –&gt; 二进制流</li>
+<li>反序列化：二进制流 –&gt; 对象类型<br>客户端（序列化） -&gt; &lt;我是网络&gt;二进制流&lt;/我是网络&gt; -&gt; 服务端（反序列化）<br>常用序列化方式：json、protobuf、flattbuffers</li>
+</ol>
+<h3 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h3><p>当一次RPC出错了，如何判断是在客户端、服务端或中间链路，又或是网络超时和丢包呢？<br>暂不抛出<strong>服务治理</strong>的概念（包含服务发现、负载均衡、限流、熔断、超时、重试和服务追踪）</p>
+<h2 id="RPC需要解决的问题"><a href="#RPC需要解决的问题" class="headerlink" title="RPC需要解决的问题"></a>RPC需要解决的问题</h2><ol>
+<li>开发效率：避免每次RPC进行重复的socket操作、序列话和反序列化、协议解析、寻址处理和异常处理</li>
+<li>通信效率：<ul>
+<li>为了避免每次建立请求都重新创建和销毁，通常采用长连接</li>
+<li>客户端的话，使用连接池进行连接复用</li>
+</ul>
+</li>
+<li>数据传输<ul>
+<li>序列化：需要支持多种序列化方式 &amp;&amp; 支持业务自定义</li>
+<li>传输效率：传输数据包大小和协议（后续章节详述，记得这里标注相应章节号）</li>
+</ul>
+</li>
+<li>通用化：<ul>
+<li>所有组件<strong>可插拔</strong></li>
+<li>所有组件支持<strong>业务自定义</strong></li>
+</ul>
+</li>
+<li>服务治理</li>
+</ol>
 
             </div>
             <hr/>
@@ -429,7 +456,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://atidat.github.io/2020/01/27/%E9%97%B2%E8%81%8A%E8%AE%B0%E4%BA%8B%EF%BC%88%E4%B8%80%EF%BC%89/">https://atidat.github.io/2020/01/27/%E9%97%B2%E8%81%8A%E8%AE%B0%E4%BA%8B%EF%BC%88%E4%B8%80%EF%BC%89/</a>
+                    <a href="https://atidat.github.io/2020/01/27/goRPC/gorpc%E4%B9%8B%E5%8E%9F%E7%90%86/">https://atidat.github.io/2020/01/27/goRPC/gorpc%E4%B9%8B%E5%8E%9F%E7%90%86/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -467,8 +494,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E7%94%9F%E6%B4%BB%E9%9A%8F%E7%AC%94/">
-                                    <span class="chip bg-color">生活随笔</span>
+                                <a href="/tags/RPC/">
+                                    <span class="chip bg-color">RPC</span>
                                 </a>
                             
                         </div>
@@ -638,20 +665,20 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/01/27/rip4kobe/">
+                <a href="/2020/01/27/%E9%97%B2%E8%81%8A%E8%AE%B0%E4%BA%8B%EF%BC%88%E4%B8%80%EF%BC%89/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="R.I.P For Kobe Bryant">
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="闲聊记事（一）">
                         
-                        <span class="card-title">R.I.P For Kobe Bryant</span>
+                        <span class="card-title">闲聊记事（一）</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
-
+                            关于新型冠状病毒截至到现在（1月26日 23：31），丁香网实时统计的全国确诊人数已达2076例。从前，这些数字，我往往无感，总觉得太遥远。如今，这些数字却化为了恐惧，如同羊水般包裹在周围。   
+我一直以为自己不怕死，看来还是高估了自己。
                         
                     </div>
                     <div class="publish-info">
@@ -667,13 +694,21 @@
                     </div>
                 </div>
                 
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E7%94%9F%E6%B4%BB%E9%9A%8F%E7%AC%94/">
+                        <span class="chip bg-color">生活随笔</span>
+                    </a>
+                    
+                </div>
+                
             </div>
         </div>
         
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+                本篇&nbsp;<i class="far fa-dot-circle"></i>
             </div>
             <div class="card">
                 <a href="/2020/01/27/goRPC/gorpc%E4%B9%8B%E5%8E%9F%E7%90%86/">
@@ -704,6 +739,7 @@ RPC调用过程复习下本地调用file, err := o
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
