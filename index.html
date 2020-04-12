@@ -1,429 +1,53 @@
+extends base
+- var current_title = page.title || tag.name || category.name || site.title
 
-<!DOCTYPE html>
-<html lang="zh-CN">
+block title
+  if config.subtitle
+    title= config.title + ' | ' + config.subtitle
+  else
+    title= config.title
+block content
 
+  for post in page.posts.toArray()
+    .post
+      h2.post-title
+        include _partial/helpers
+        a(href=url_for(post.path))
+          +title(post)
+      .post-meta
+        if theme.comment.changyan.appid && theme.comment.changyan.appkey
+          a.comment-count(href=url_for(post.path) + '#comments')
+            span.cy_cmt_count(id = 'url::' + config.url +'/'+ post.path)
+            = ''+ __('guestbook') + ','
+            span.cy_cmt_participate(id = 'url::' + config.url +'/'+ post.path)
+            = ''+ __('participate')
+        p
+          if post.top
+            span= '【' + __('topped') + '】'
+          span.date= post.date.format(config.date_format)
+          if post.categories.length > 0
+            span
+              for category in post.categories.toArray()
+                a.category(href=url_for(category.path))= category.name
+      if post.description
+        .post-content
+          != post.description
+      else if post.excerpt
+        .post-content
+          != post.excerpt
+      else if post.content
+        - var br = post.content.indexOf('\n')
+        if br < 0
+          .post-content
+            != post.content
+        else
+          .post-content
+            != post.content.substring(0, br)
+      p(class='readmore')
+        a(href=url_for(post.path))= __('Readmore')
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
-  <meta name="theme-color" content="#202020"/>
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
-  
-  
-    <meta name="keywords" content="atidat,生活随笔,技术积累" />
-  
-
-  
-    <meta name="description" content="归来半生，仍是少年" />
-  
-  
-  <link rel="icon" type="image/x-icon" href="/logo.png">
-  <title> [ 春花秋月何时了 ]一切皆对象</title>
-  
-    <!-- stylesheets list from config.yml -->
-    
-      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
-    
-      <link rel="stylesheet" href="/css/xoxo.css">
-    
-  
-<meta name="generator" content="Hexo 4.2.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
-
-
-<body>
-  <div class="nav-container">
-    <nav class="home-menu pure-menu pure-menu-horizontal">
-  <a class="pure-menu-heading" href="/">
-    <img class="avatar" src="https://atidat.github.io/images/logo.png">
-    <span class="title">春花秋月何时了</span>
-  </a>
-
-  <ul class="pure-menu-list clearfix">
-      
-          
-            <li class="pure-menu-item actived"><a href="/" class="pure-menu-link">首页</a></li>
-          
-      
-          
-            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
-          
-      
-          
-            <li class="pure-menu-item"><a href="/tags" class="pure-menu-link">标签</a></li>
-          
-      
-          
-            <li class="pure-menu-item"><a href="/search" class="pure-menu-link">搜索</a></li>
-          
-      
-          
-            <li class="pure-menu-item"><a href="https://0xff000000.com" target="_blank" rel="noopener" class="pure-menu-link">关于</a></li>
-          
-      
-          
-            <li class="pure-menu-item"><a href="/atom.xml" class="pure-menu-link">订阅</a></li>
-          
-      
-  </ul>
-   
-</nav>
-  </div>
-
-  <div class="container" id="content-outer">
-    <div class="inner" id="content-inner">
-      
-
-  <div class="recent-posts">
-    
-
-      <article class="recent-post-item">
-        <a class="title" href="/2020/04/12/goRPC/gorpc之框架概览/"><h2>goRPC原理</h2></a>
-        <div class="post-meta">
-          
-          <time class="time" datetime="2020-04-12T14:19:00.000Z">
-            2020-04-12
-          </time>
-          
-          <span class="slash">/</span>
-          
-          <ul class="index-tag-list" itemprop="keywords"><li class="index-tag-list-item"><a class="index-tag-list-link" href="/tags/RPC/" rel="tag">RPC</a></li></ul>
-          
-
-        </div>
-
-        
-        <a class="more" href="/2020/04/12/goRPC/gorpc之框架概览/"> 阅读全文〉</a>
-      </article>
-    
-
-      <article class="recent-post-item">
-        <a class="title" href="/2020/04/12/晓信视频面试/"><h2>晓信视频面试</h2></a>
-        <div class="post-meta">
-          
-          <time class="time" datetime="2020-04-12T09:39:28.000Z">
-            2020-04-12
-          </time>
-          
-          <span class="slash">/</span>
-          
-          <ul class="index-tag-list" itemprop="keywords"><li class="index-tag-list-item"><a class="index-tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a></li></ul>
-          
-
-        </div>
-
-        
-        <a class="more" href="/2020/04/12/晓信视频面试/"> 阅读全文〉</a>
-      </article>
-    
-
-      <article class="recent-post-item">
-        <a class="title" href="/2020/04/11/goRPC/gorpc之原理/"><h2>goRPC原理</h2></a>
-        <div class="post-meta">
-          
-          <time class="time" datetime="2020-04-11T00:13:28.000Z">
-            2020-04-11
-          </time>
-          
-          <span class="slash">/</span>
-          
-          <ul class="index-tag-list" itemprop="keywords"><li class="index-tag-list-item"><a class="index-tag-list-link" href="/tags/RPC/" rel="tag">RPC</a></li></ul>
-          
-
-        </div>
-
-        
-        <a class="more" href="/2020/04/11/goRPC/gorpc之原理/"> 阅读全文〉</a>
-      </article>
-    
-
-      <article class="recent-post-item">
-        <a class="title" href="/2020/04/07/同花顺视频面试/"><h2>同花顺视频面试</h2></a>
-        <div class="post-meta">
-          
-          <time class="time" datetime="2020-04-07T12:59:48.306Z">
-            2020-04-07
-          </time>
-          
-          <span class="slash">/</span>
-          
-          
-          
-
-        </div>
-
-        
-        <a class="more" href="/2020/04/07/同花顺视频面试/"> 阅读全文〉</a>
-      </article>
-    
-
-      <article class="recent-post-item">
-        <a class="title" href="/2020/04/04/关于promise/"><h2>关于promise</h2></a>
-        <div class="post-meta">
-          
-          <time class="time" datetime="2020-04-04T10:31:41.896Z">
-            2020-04-04
-          </time>
-          
-          <span class="slash">/</span>
-          
-          
-          
-
-        </div>
-
-        
-        <a class="more" href="/2020/04/04/关于promise/"> 阅读全文〉</a>
-      </article>
-    
-
-      <article class="recent-post-item">
-        <a class="title" href="/2020/04/03/同花顺笔试题/"><h2>同花顺笔试题</h2></a>
-        <div class="post-meta">
-          
-          <time class="time" datetime="2020-04-03T14:22:38.256Z">
-            2020-04-03
-          </time>
-          
-          <span class="slash">/</span>
-          
-          
-          
-
-        </div>
-
-        
-        <a class="more" href="/2020/04/03/同花顺笔试题/"> 阅读全文〉</a>
-      </article>
-    
-
-      <article class="recent-post-item">
-        <a class="title" href="/2020/03/02/关爱儿童成长/"><h2>关爱儿童成长</h2></a>
-        <div class="post-meta">
-          
-          <time class="time" datetime="2020-03-01T21:58:31.000Z">
-            2020-03-01
-          </time>
-          
-          <span class="slash">/</span>
-          
-          <ul class="index-tag-list" itemprop="keywords"><li class="index-tag-list-item"><a class="index-tag-list-link" href="/tags/%E7%94%9F%E6%B4%BB%E9%9A%8F%E7%AC%94/" rel="tag">生活随笔</a></li></ul>
-          
-
-        </div>
-
-        
-        <a class="more" href="/2020/03/02/关爱儿童成长/"> 阅读全文〉</a>
-      </article>
-    
-
-      <article class="recent-post-item">
-        <a class="title" href="/2020/02/11/Go-1-13新特性/"><h2>Go.1.13新特性</h2></a>
-        <div class="post-meta">
-          
-          <time class="time" datetime="2020-02-11T10:24:59.000Z">
-            2020-02-11
-          </time>
-          
-          <span class="slash">/</span>
-          
-          
-          
-
-        </div>
-
-        
-        <a class="more" href="/2020/02/11/Go-1-13新特性/"> 阅读全文〉</a>
-      </article>
-    
-
-      <article class="recent-post-item">
-        <a class="title" href="/2020/01/31/golang简易版发布订阅/"><h2>golang简易版发布订阅</h2></a>
-        <div class="post-meta">
-          
-          <time class="time" datetime="2020-01-31T12:27:26.000Z">
-            2020-01-31
-          </time>
-          
-          <span class="slash">/</span>
-          
-          <ul class="index-tag-list" itemprop="keywords"><li class="index-tag-list-item"><a class="index-tag-list-link" href="/tags/%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85%E6%A8%A1%E5%9E%8B/" rel="tag">发布订阅模型</a></li></ul>
-          
-
-        </div>
-
-        
-        <a class="more" href="/2020/01/31/golang简易版发布订阅/"> 阅读全文〉</a>
-      </article>
-    
-
-      <article class="recent-post-item">
-        <a class="title" href="/2020/01/27/rip4kobe/"><h2>R.I.P For Kobe Bryant</h2></a>
-        <div class="post-meta">
-          
-          <time class="time" datetime="2020-01-27T11:15:21.000Z">
-            2020-01-27
-          </time>
-          
-          <span class="slash">/</span>
-          
-          
-          
-
-        </div>
-
-        
-        <a class="more" href="/2020/01/27/rip4kobe/"> 阅读全文〉</a>
-      </article>
-    
-  </div>
-
-
-
-    </div>
-
-    
-
-  </div>
-  <footer class="footer text-center">
-    <div id="bottom-inner">
-        <a class="bottom-item" href="https://blog.0xff000000.com" target="_blank" rel="noopener">首页</a> |
-        <a class="bottom-item" href="https://0xff000000.com" target="_blank">主站</a> |
-        <a class="bottom-item" href="https://github.com/KevinOfNeu" target="_blank">GitHub</a> |
-        <a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
-        <a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme xoxo</a>
-    </div>
-</footer>
-  
-
-<script>
-  (function(window, document, undefined) {
-
-    var timer = null;
-
-    function returnTop() {
-      cancelAnimationFrame(timer);
-      timer = requestAnimationFrame(function fn() {
-        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
-        if (oTop > 0) {
-          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
-          timer = requestAnimationFrame(fn);
-        } else {
-          cancelAnimationFrame(timer);
-        }
-      });
-    }
-
-    var hearts = [];
-    window.requestAnimationFrame = (function() {
-      return window.requestAnimationFrame ||
-        window.webkitRequestAnimationFrame ||
-        window.mozRequestAnimationFrame ||
-        window.oRequestAnimationFrame ||
-        window.msRequestAnimationFrame ||
-        function(callback) {
-          setTimeout(callback, 1000 / 60);
-        }
-    })();
-    init();
-
-    function init() {
-      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
-      attachEvent();
-      gameloop();
-      addMenuEvent();
-    }
-
-    function gameloop() {
-      for (var i = 0; i < hearts.length; i++) {
-        if (hearts[i].alpha <= 0) {
-          document.body.removeChild(hearts[i].el);
-          hearts.splice(i, 1);
-          continue;
-        }
-        hearts[i].y--;
-        hearts[i].scale += 0.004;
-        hearts[i].alpha -= 0.013;
-        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
-      }
-      requestAnimationFrame(gameloop);
-    }
-
-    /**
-     * 给logo设置点击事件
-     * 
-     * - 回到顶部
-     * - 出现爱心
-     */
-    function attachEvent() {
-      var old = typeof window.onclick === "function" && window.onclick;
-      var logo = document.getElementById("logo");
-      if (logo) {
-        logo.onclick = function(event) {
-          returnTop();
-          old && old();
-          createHeart(event);
-        }
-      }
-      
-    }
-
-    function createHeart(event) {
-      var d = document.createElement("div");
-      d.className = "heart";
-      hearts.push({
-        el: d,
-        x: event.clientX - 5,
-        y: event.clientY - 5,
-        scale: 1,
-        alpha: 1,
-        color: randomColor()
-      });
-      document.body.appendChild(d);
-    }
-
-    function css(css) {
-      var style = document.createElement("style");
-      style.type = "text/css";
-      try {
-        style.appendChild(document.createTextNode(css));
-      } catch (ex) {
-        style.styleSheet.cssText = css;
-      }
-      document.getElementsByTagName('head')[0].appendChild(style);
-    }
-
-    function randomColor() {
-      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
-      return "#F44336";
-    }
-
-    function addMenuEvent() {
-      var menu = document.getElementById('menu-main-post');
-      if (menu) {
-        var toc = document.getElementById('toc');
-        if (toc) {
-          menu.onclick = function() {
-            if (toc) {
-              if (toc.style.display == 'block') {
-                toc.style.display = 'none';
-              } else {
-                toc.style.display = 'block';
-              }
-            }
-          };
-        } else {
-          menu.style.display = 'none';
-        }
-      }
-    }
-
-  })(window, document);
-</script>
-
-  
-
-
-
-</body>
-</html>
+  include _partial/paginator
+block pageOnly
+  script(type='text/javascript', src=url_for(theme.js) + '/totop.js' + '?v=' + theme.version, async)
+  if theme.comment.changyan.appid && theme.comment.changyan.appkey
+    script(id="cy_cmt_num", src='https://changyan.sohu.com/upload/plugins/plugins.list.count.js' + '?clientId=' + theme.comment.changyan.appid)
