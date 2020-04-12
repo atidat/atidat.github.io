@@ -6,21 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://atidat.github.io">
-  <title>Go.1.13新特性 | 春花秋月何时了</title>
+  <title>goRPC原理 | 春花秋月何时了</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="《goproxy.cn - 为中国 Go 语言开发者量身打造的模块代理》整理https:&#x2F;&#x2F;segmentfault.com&#x2F;a&#x2F;1190000020293616?utm_source&#x3D;tag-newest Go 1.13 新特性说明一、关于Module1、前情提要Go Modules最早发布于1.11版本。随着一起发布的还有Module proxy protocol 协议，通过该协议可以搭建Go">
+  <meta name="description" content="注：本文内容购买于掘金小册，仅做于个人学习。若有侵权，谢绝转载">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Go.1.13新特性">
-<meta property="og:url" content="https://atidat.github.io/2020/02/11/Go-1-13%E6%96%B0%E7%89%B9%E6%80%A7/index.html">
+<meta property="og:title" content="goRPC原理">
+<meta property="og:url" content="https://atidat.github.io/2020/04/12/goRPC/gorpc%E4%B9%8B%E6%A1%86%E6%9E%B6%E6%A6%82%E8%A7%88/index.html">
 <meta property="og:site_name" content="春花秋月何时了">
-<meta property="og:description" content="《goproxy.cn - 为中国 Go 语言开发者量身打造的模块代理》整理https:&#x2F;&#x2F;segmentfault.com&#x2F;a&#x2F;1190000020293616?utm_source&#x3D;tag-newest Go 1.13 新特性说明一、关于Module1、前情提要Go Modules最早发布于1.11版本。随着一起发布的还有Module proxy protocol 协议，通过该协议可以搭建Go">
+<meta property="og:description" content="注：本文内容购买于掘金小册，仅做于个人学习。若有侵权，谢绝转载">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-02-11T10:24:59.000Z">
-<meta property="article:modified_time" content="2020-02-11T03:33:30.315Z">
+<meta property="article:published_time" content="2020-04-12T14:19:00.000Z">
+<meta property="article:modified_time" content="2020-04-12T06:20:21.454Z">
 <meta property="article:author" content="atidat">
-<meta property="article:tag" content="atidat">
-<meta property="article:tag" content="生活随笔">
-<meta property="article:tag" content="技术积累">
+<meta property="article:tag" content="RPC">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="春花秋月何时了" type="application/atom+xml">
@@ -161,34 +159,27 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Go-1-13新特性" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-goRPC/gorpc之框架概览" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Go.1.13新特性
+      goRPC原理
     </h1>
   
 
         
-        <a href="/2020/02/11/Go-1-13%E6%96%B0%E7%89%B9%E6%80%A7/" class="archive-article-date">
-  	<time datetime="2020-02-11T10:24:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-11</time>
+        <a href="/2020/04/12/goRPC/gorpc%E4%B9%8B%E6%A1%86%E6%9E%B6%E6%A6%82%E8%A7%88/" class="archive-article-date">
+  	<time datetime="2020-04-12T14:19:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-12</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>《goproxy.cn - 为中国 Go 语言开发者量身打造的模块代理》整理<br><a href="https://segmentfault.com/a/1190000020293616?utm_source=tag-newest" target="_blank" rel="noopener">https://segmentfault.com/a/1190000020293616?utm_source=tag-newest</a></p>
-<h1 id="Go-1-13-新特性说明"><a href="#Go-1-13-新特性说明" class="headerlink" title="Go 1.13 新特性说明"></a><strong>Go 1.13 新特性说明</strong></h1><h2 id="一、关于Module"><a href="#一、关于Module" class="headerlink" title="一、关于Module"></a><strong>一、关于Module</strong></h2><h3 id="1、前情提要"><a href="#1、前情提要" class="headerlink" title="1、前情提要"></a><strong>1、前情提要</strong></h3><p>Go Modules最早发布于1.11版本。随着一起发布的还有Module proxy protocol 协议，通过该协议可以搭建Go模块代理，最后交由GOPROXY环境变量，指引go命令后续在抓取模块时的途径。</p>
-<h3 id="2、GOPROXY"><a href="#2、GOPROXY" class="headerlink" title="2、GOPROXY"></a><strong>2、GOPROXY</strong></h3><p>1.13版本将GOPROXY默认为<a href="https://proxy.golang.org" target="_blank" rel="noopener">https://proxy.golang.org</a><br>(大陆不可访问)故中国开发者需要修改GORROXY后再开发。七牛云提供了一个Go模块代理：goproxy.cn</p>
-<h3 id="3、使用goproxy-cn"><a href="#3、使用goproxy-cn" class="headerlink" title="3、使用goproxy.cn"></a><strong>3、使用goproxy.cn</strong></h3><p>命令：go env -w GOPROXY=<a href="https://goproxy.cn,direct" target="_blank" rel="noopener">https://goproxy.cn,direct</a><br>direct：解决访问私有库问题。当go抓取目标模块404时，就回退到direct，即目标模块的源头，去抓取</p>
-<h3 id="4、私有库访问"><a href="#4、私有库访问" class="headerlink" title="4、私有库访问"></a><strong>4、私有库访问</strong></h3><p>关于GOPROXY中的direct字段，并不是一个完美的私有库访问问题的解决方案。<br>GONOPROXY环境变量，通过设置该变量可以控制哪些module path能忽略GOPROXY，无脑回源。<br>如：GONOPROXY=*.corp.example.com 意味着go在抓取所有corp.example.com的三级子域名下的所有模块时都将忽略GOPROXY设置，而直接回源到目标模块的源地址</p>
-<h3 id="5、GOSUMDB"><a href="#5、GOSUMDB" class="headerlink" title="5、GOSUMDB"></a><strong>5、GOSUMDB</strong></h3><p>功能：防止从公共模块代理中抓取的模块被篡改<br>默认值：sum.golang.org<br>原理：go将在抓取完所有模块时，对所有模块进行哈希校验，只有校验值和数据库中现有值一致时，才算抓取成功。<br>GONOSUMDB：控制go应该忽略校验哪些module path下的模块</p>
-<h3 id="GOPRIVATE"><a href="#GOPRIVATE" class="headerlink" title="GOPRIVATE"></a><strong>GOPRIVATE</strong></h3><p>简单地理解为设置该变量，即同时设置了GONOPROXY和GONOSUMDB</p>
-<h2 id="二、关于defer"><a href="#二、关于defer" class="headerlink" title="二、关于defer"></a><strong>二、关于defer</strong></h2><p>待续</p>
+        <p><big>注：本文内容购买于掘金小册，仅做于个人学习。若有侵权，谢绝转载</big></p>
 
       
 
@@ -218,6 +209,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">RPC</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -268,7 +270,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://atidat.github.io/2020/02/11/Go-1-13%E6%96%B0%E7%89%B9%E6%80%A7/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://atidat.github.io/2020/04/12/goRPC/gorpc%E4%B9%8B%E6%A1%86%E6%9E%B6%E6%A6%82%E8%A7%88/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -282,18 +284,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/03/02/%E5%85%B3%E7%88%B1%E5%84%BF%E7%AB%A5%E6%88%90%E9%95%BF/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          关爱儿童成长
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/01/31/golang%E7%AE%80%E6%98%93%E7%89%88%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">golang简易版发布订阅</div>
+    <a href="/2020/04/12/%E6%99%93%E4%BF%A1%E8%A7%86%E9%A2%91%E9%9D%A2%E8%AF%95/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">晓信视频面试</div>
       <i class="icon-circle-right"></i>
     </a>
   
