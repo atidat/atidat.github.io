@@ -4,11 +4,11 @@
   
     
     <entry>
-      <title>goRPC原理</title>
-      <link href="/2020/04/12/goRPC/gorpc%E4%B9%8B%E6%A1%86%E6%9E%B6%E6%A6%82%E8%A7%88/"/>
-      <url>/2020/04/12/goRPC/gorpc%E4%B9%8B%E6%A1%86%E6%9E%B6%E6%A6%82%E8%A7%88/</url>
+      <title>gorpc之框架概览</title>
+      <link href="/2020/04/13/goRPC/gorpc%E4%B9%8B%E6%A1%86%E6%9E%B6%E6%A6%82%E8%A7%88/"/>
+      <url>/2020/04/13/goRPC/gorpc%E4%B9%8B%E6%A1%86%E6%9E%B6%E6%A6%82%E8%A7%88/</url>
       
-        <content type="html"><![CDATA[<p><big>注：本文内容购买于掘金小册，仅做于个人学习。若有侵权，谢绝转载</big></p>]]></content>
+        <content type="html"><![CDATA[<p><big>注：本文内容购买于掘金小册，仅做于个人学习。若有侵权，谢绝转载</big></p><h2 id="goRPC框架模块及能力"><a href="#goRPC框架模块及能力" class="headerlink" title="goRPC框架模块及能力"></a><big>goRPC框架模块及能力</big></h2><ul><li>client：支持客户端发包</li><li>server：支持服务端发包</li><li>transport：提供底层的通信能力</li><li>codec：支持自定义协议的解析、序列化和反序列化</li><li>pool：支持连接池和对象池等实现，提供客户端连接复用和对象复用</li><li>log：提供日志能力</li><li>selector：提供寻址能力，支持服务发现和负载均衡等默认实现</li><li>stream：提供服务端和客户端上下文数据透传能力</li><li>protocol：支持自定义私有协议</li><li>plugin：支持第三方插件化</li><li>interceptor：提供框架拦截器</li><li>metadata：支持客户端和服务端参数传递</li></ul><h2 id="整体架构"><a href="#整体架构" class="headerlink" title="整体架构"></a>整体架构</h2><p><img src="https://i.loli.net/2020/04/12/OoDP54grtuSClbR.jpg" alt="goRPC整体框架"><br>层次架构：   </p><ol><li>业务层：位于最上层，包括client和server. <ul><li>server：<ul><li>解析收包的请求参数</li><li>回写响应</li></ul></li><li>client：<ul><li>拼装请求参数</li><li>发起invoke调用</li><li>向server端发包</li></ul></li></ul></li><li>组件层：位于中间层，为业务层提供接口调用的通用化能力。包括：<ul><li>interceptor：拦截器组件</li><li>resolver：服务发现组件</li><li>loadbalance：负载均衡组件</li><li>codec：打解包组件</li><li>protocol：协议组件</li><li>log：日志组件</li><li>metadata：上下文参数透传</li></ul></li><li>传输层：实现client和server<ul><li>建立连接</li><li>发送数据</li><li>为请求分配链接</li><li>链接状态管理</li><li>连接关闭</li></ul></li><li>插件层：对接第三方业务系统，实现了基于consul进行服务发现的插件和基于jaeger进行分布式链路追踪的插件</li></ol><h2 id="技术选型"><a href="#技术选型" class="headerlink" title="技术选型"></a>技术选型</h2><h3 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h3><p>协议：client和server通信间的约定<br>通用协议（如grpc） or 自定义二进制私有协议 ====&gt; 自定义二进制私有协议</p><h3 id="序列化方式"><a href="#序列化方式" class="headerlink" title="序列化方式"></a>序列化方式</h3><p>根据性能对常见的序列化方式排序：<br>gogoprotobuf &gt; msgpack &gt; flatbuffers &gt; thrift &gt; protobuf &gt; json &gt; xml<br>RPC框架支持代码生成和反射两种调用方式。此处，反射选择msgack, 代码生成选择protobuf</p><h3 id="服务发现"><a href="#服务发现" class="headerlink" title="服务发现"></a>服务发现</h3><p>go周边生态提供服务发现能力的开源组件由consul和etcd，都是基于raft分布式一致性协议，提供k/v存储能力。consul更全面，封装了服务发现、健康检查和内置DNS server等。</p><h2 id="分布式链路追踪"><a href="#分布式链路追踪" class="headerlink" title="分布式链路追踪"></a>分布式链路追踪</h2><ol><li>业界标准：opentracing，约定分布式链路追踪的组件进行<strong>*span上报</strong>的标准格式，为开发语言提供了api支持。</li><li>go的标准参考<a href="https://github.com/opentracing/opentracing-go" target="_blank" rel="noopener">opentarcing-go</a></li><li>业内实现该标准的组件有zipkin和jaeger. jarger由go开发，故选择之</li></ol>]]></content>
       
       
       
@@ -17,6 +17,19 @@
             <tag> RPC </tag>
             
         </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>gorpc之框架概览.md</title>
+      <link href="/2020/04/13/gorpc%E4%B9%8B%E6%A1%86%E6%9E%B6%E6%A6%82%E8%A7%88-md/"/>
+      <url>/2020/04/13/gorpc%E4%B9%8B%E6%A1%86%E6%9E%B6%E6%A6%82%E8%A7%88-md/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
       
     </entry>
     

@@ -4,14 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="晓信视频面试, atidat,生活随笔,技术积累">
-    <meta name="description" content="
-项目中提到了gorm, 请问下如果让你去设计orm，你会怎么做，你会考虑哪些点？
-
-没回答上来，之前头条面试也问过一次，没回答上来。现在这里根据网上查到的答案记录下。
-
-
-项目中提到了主备选举，能大概讲一下什么是主备选举嘛？你了解raft">
+    <meta name="keywords" content="gorpc之框架概览.md, atidat,生活随笔,技术积累">
+    <meta name="description" content="gorpc之框架概览.md | 春花秋月何时了">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>晓信视频面试 | 春花秋月何时了</title>
+    <title>gorpc之框架概览.md | 春花秋月何时了</title>
     <link rel="icon" type="image/jpeg" href="/logo.jpg">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -239,12 +233,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">晓信视频面试</h1>
+                    <h1 class="description center-align post-title">gorpc之框架概览.md</h1>
                 </div>
             </div>
         </div>
@@ -359,13 +353,9 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                    <div class="article-tag">
-                        
-                            <a href="/tags/%E9%9D%A2%E8%AF%95/">
-                                <span class="chip bg-color">面试</span>
-                            </a>
-                        
-                    </div>
+                          <div class="article-tag">
+                            <span class="chip bg-color">无标签</span>
+                          </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -399,38 +389,7 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <ol>
-<li><p>项目中提到了gorm, 请问下如果让你去设计orm，你会怎么做，你会考虑哪些点？</p>
-<ul>
-<li>没回答上来，之前头条面试也问过一次，没回答上来。现在这里根据网上查到的答案记录下。</li>
-</ul>
-</li>
-<li><p>项目中提到了主备选举，能大概讲一下什么是主备选举嘛？你了解raft协议吗？</p>
-<ul>
-<li>基于 <em>etcd</em> 实现的选举服务提供主备选举的能力。对于分布式服务，进行数据库写的时候，只要一个进程才能完成。此时可以通过主备机的概念，形成 <em>一主多备</em>，由主机去处理业务。容灾时，<em>主机降备</em>，选举服务 <em>重新选举</em>，选出一个新的主，完成容灾切换。（待完善回答）</li>
-<li>未接触过raft协议，似乎不好理解（待完善回答） </li>
-</ul>
-</li>
-<li><p>协程间切换是在内核态完成，线程间切换是在用户态完成。衍生出一个问题，用户态和内核态区别在哪？（待完善回答）</p>
-<ul>
-<li>特权指令的执行权限。cpu根据指令危险程度划分四个级别：RING0、RING1、RING2和RING3。用户态代码只能执行RING3级别的指令，</li>
-<li>提供统一的应用层接口</li>
-</ul>
-</li>
-<li><h2 id="对RPC理解？（看完gorpc小册后再来回答）"><a href="#对RPC理解？（看完gorpc小册后再来回答）" class="headerlink" title="对RPC理解？（看完gorpc小册后再来回答）"></a>对RPC理解？（看完gorpc小册后再来回答）</h2><ul>
-<li></li>
-<li></li>
-</ul>
-</li>
-<li><h2 id="描述下OSI7层协议"><a href="#描述下OSI7层协议" class="headerlink" title="描述下OSI7层协议"></a>描述下OSI7层协议</h2></li>
-<li><p>TCP和UDP区别？你说QQ消息是基于UDP协议，那他是怎么解决丢包问题呢？</p>
-</li>
-<li><p>对微服务的理解？服务发现？</p>
-</li>
-<li><p>对鉴权的理解</p>
-</li>
-</ol>
-
+                
             </div>
             <hr/>
 
@@ -455,7 +414,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://atidat.github.io/2020/04/12/%E6%99%93%E4%BF%A1%E8%A7%86%E9%A2%91%E9%9D%A2%E8%AF%95/">https://atidat.github.io/2020/04/12/%E6%99%93%E4%BF%A1%E8%A7%86%E9%A2%91%E9%9D%A2%E8%AF%95/</a>
+                    <a href="https://atidat.github.io/2020/04/13/gorpc%E4%B9%8B%E6%A1%86%E6%9E%B6%E6%A6%82%E8%A7%88-md/">https://atidat.github.io/2020/04/13/gorpc%E4%B9%8B%E6%A1%86%E6%9E%B6%E6%A6%82%E8%A7%88-md/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -492,11 +451,7 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            
-                                <a href="/tags/%E9%9D%A2%E8%AF%95/">
-                                    <span class="chip bg-color">面试</span>
-                                </a>
-                            
+                            <span class="chip bg-color">无标签</span>
                         </div>
                     
                 </div>
@@ -665,7 +620,7 @@
         repo: 'https://atidat.github.io',
         owner: 'atidat',
         admin: "atidat",
-        id: '2020-04-12T09-39-28',
+        id: '2020-04-12T17-01-53',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -690,19 +645,24 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/04/13/gorpc%E4%B9%8B%E6%A1%86%E6%9E%B6%E6%A6%82%E8%A7%88-md/">
+                <a href="/2020/04/13/goRPC/gorpc%E4%B9%8B%E6%A1%86%E6%9E%B6%E6%A6%82%E8%A7%88/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="gorpc之框架概览.md">
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="gorpc之框架概览">
                         
-                        <span class="card-title">gorpc之框架概览.md</span>
+                        <span class="card-title">gorpc之框架概览</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            注：本文内容购买于掘金小册，仅做于个人学习。若有侵权，谢绝转载
+goRPC框架模块及能力
+client：支持客户端发包
+server：支持服务端发包
+transport：提供底层的通信能力
+codec：支持自定义协议的解析、序列化和反序列化
                         
                     </div>
                     <div class="publish-info">
@@ -718,6 +678,14 @@
                     </div>
                 </div>
                 
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/RPC/">
+                        <span class="chip bg-color">RPC</span>
+                    </a>
+                    
+                </div>
+                
             </div>
         </div>
         
@@ -727,25 +695,30 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/04/11/goRPC/gorpc%E4%B9%8B%E5%8E%9F%E7%90%86/">
+                <a href="/2020/04/12/%E6%99%93%E4%BF%A1%E8%A7%86%E9%A2%91%E9%9D%A2%E8%AF%95/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="goRPC原理">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="晓信视频面试">
                         
-                        <span class="card-title">goRPC原理</span>
+                        <span class="card-title">晓信视频面试</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            注：本文内容购买于掘金小册，仅做于个人学习。若有侵权，谢绝转载
-什么是RPCRPC：Remote Procedure Call，即远程过程调用。通过本地计算机调用另一台远程计算机上的程序，不需要了解底层网络细节，使得整个过程就像本地调用一样
+                            
+项目中提到了gorm, 请问下如果让你去设计orm，你会怎么做，你会考虑哪些点？
+
+没回答上来，之前头条面试也问过一次，没回答上来。现在这里根据网上查到的答案记录下。
+
+
+项目中提到了主备选举，能大概讲一下什么是主备选举嘛？你了解raft
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-04-11
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-04-12
                             </span>
                         <span class="publish-author">
                             
@@ -758,8 +731,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/RPC/">
-                        <span class="chip bg-color">RPC</span>
+                    <a href="/tags/%E9%9D%A2%E8%AF%95/">
+                        <span class="chip bg-color">面试</span>
                     </a>
                     
                 </div>
